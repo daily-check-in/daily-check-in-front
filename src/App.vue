@@ -1,32 +1,12 @@
 <template>
 	<div id="app">
-		<v-app id="inspire">
-			<v-app-bar app color="white" flat>
-				<v-container class="py-0 fill-height">
-					<v-avatar class="mr-10" color="grey darken-1" size="32"></v-avatar>
-
-					<v-btn v-for="link in links" :key="link.name" text>
-						<router-link :to="link.to">{{ link.name }}</router-link>
-					</v-btn>
-
-					<v-spacer></v-spacer>
-
-					<v-responsive max-width="260">
-						<v-text-field
-							dense
-							flat
-							hide-details
-							rounded
-							solo-inverted
-						></v-text-field>
-					</v-responsive>
-				</v-container>
-			</v-app-bar>
+		<v-app id="inspire" v-resize="onResize">
+			<Header v-if="isPc" />
 
 			<v-main class="grey lighten-3">
 				<v-container>
-					<v-row>
-						<v-col cols="2">
+					<v-row justify="center">
+						<v-col v-if="isPc" cols="4">
 							<v-sheet rounded="lg">
 								<v-list color="transparent">
 									<v-list-item v-for="n in 5" :key="n" link>
@@ -48,10 +28,8 @@
 							</v-sheet>
 						</v-col>
 
-						<v-col>
-							<v-sheet min-height="70vh" rounded="lg">
-								<router-view />
-							</v-sheet>
+						<v-col :cols="computedContainerCols">
+							<router-view />
 						</v-col>
 					</v-row>
 				</v-container>
@@ -62,21 +40,35 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import Header from './layouts/Header.vue';
+import { mapGetters, mapMutations } from 'vuex';
 
 export default Vue.extend({
-	data() {
-		return {
-			links: [
-				{
-					name: 'Home',
-					to: '/'
-				},
-				{
-					name: 'About',
-					to: '/about'
-				}
-			]
-		};
-	}
+	computed: {
+		...mapGetters(['isMobile', 'isTablet', 'isPc']),
+		computedContainerCols() {
+			if (this.isMobile) {
+				return 12;
+			} else if (this.isTablet) {
+				return 11;
+			} else {
+				return 8;
+			}
+		}
+	},
+	mounted() {
+		this.onResize();
+	},
+	methods: {
+		...mapMutations(['setWindowWidth']),
+		onResize() {
+			this.setWindowWidth(window.innerWidth);
+		}
+	},
+	components: { Header }
 });
 </script>
+
+<style lang="scss">
+@import 'assets/styles/common.scss';
+</style>

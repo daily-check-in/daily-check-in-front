@@ -5,9 +5,25 @@ import auth from './modules/auth';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-	state: {},
-	getters: {},
-	mutations: {},
+	state: {
+		windowWidth: 0
+	},
+	getters: {
+		isMobile: state => {
+			return state.windowWidth < 600;
+		},
+		isTablet: state => {
+			return state.windowWidth > 600 && state.windowWidth < 960;
+		},
+		isPc: state => {
+			return state.windowWidth > 960;
+		}
+	},
+	mutations: {
+		setWindowWidth(state, payload) {
+			state.windowWidth = payload;
+		}
+	},
 	actions: {},
 	modules: {
 		auth
