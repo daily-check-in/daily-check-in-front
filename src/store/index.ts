@@ -1,31 +1,17 @@
 import Vue from 'vue';
-import Vuex from 'vuex';
-import auth from './modules/auth';
+import Vuex, { StoreOptions } from 'vuex';
+import { RootState, state } from './state';
+import { getters } from './getters';
+import { mutations } from './mutations';
+import { actions } from './actions';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
-	state: {
-		windowWidth: 0
-	},
-	getters: {
-		isMobile: state => {
-			return state.windowWidth < 600;
-		},
-		isTablet: state => {
-			return state.windowWidth > 600 && state.windowWidth < 960;
-		},
-		isPc: state => {
-			return state.windowWidth > 960;
-		}
-	},
-	mutations: {
-		setWindowWidth(state, payload) {
-			state.windowWidth = payload;
-		}
-	},
-	actions: {},
-	modules: {
-		auth
-	}
-});
+const store: StoreOptions<RootState> = {
+	state: state,
+	getters: getters,
+	mutations: mutations,
+	actions: actions
+};
+
+export default new Vuex.Store(store);

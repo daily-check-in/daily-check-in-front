@@ -8,14 +8,14 @@ import './plugins';
 Vue.config.productionTip = false;
 
 firebase.default.auth().onAuthStateChanged(async user => {
-	console.log(user);
+	// console.log(user);
 	if (user) {
 		await user.getIdToken().then((token: string) => {
-			store.commit('setToken', token);
+			store.commit('SET_TOKEN', token);
 		});
 
 		const userInfo = user?.providerData[0];
-		store.commit('setUser', userInfo);
+		store.commit('SET_USER', userInfo);
 	}
 
 	new Vue({
