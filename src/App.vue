@@ -1,12 +1,12 @@
 <template>
 	<div id="app">
-		<v-app id="inspire" v-resize="onResize">
-			<Header v-if="isPc" />
+		<v-app id="inspire">
+			<Header v-if="!this.$vuetify.breakpoint.mobile" />
 
 			<v-main class="grey lighten-3">
 				<v-container>
 					<v-row justify="center">
-						<v-col v-if="isPc" cols="4">
+						<v-col v-if="!this.$vuetify.breakpoint.mobile" cols="4">
 							<v-sheet rounded="lg">
 								<v-list color="transparent">
 									<v-list-item v-for="n in 5" :key="n" link>
@@ -41,28 +41,11 @@
 <script lang="ts">
 import Vue from 'vue';
 import Header from './layouts/Header.vue';
-import { mapGetters, mapMutations } from 'vuex';
 
 export default Vue.extend({
 	computed: {
-		...mapGetters(['isMobile', 'isTablet', 'isPc']),
 		computedContainerCols() {
-			if (this.isMobile) {
-				return 12;
-			} else if (this.isTablet) {
-				return 11;
-			} else {
-				return 8;
-			}
-		}
-	},
-	mounted() {
-		this.onResize();
-	},
-	methods: {
-		...mapMutations(['setWindowWidth']),
-		onResize() {
-			this.setWindowWidth(window.innerWidth);
+			return this.$vuetify.breakpoint.mobile ? 12 : 8;
 		}
 	},
 	components: { Header }
