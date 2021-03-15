@@ -54,10 +54,10 @@
 						<v-btn
 							text
 							block
-							:color="likeColor(item.isLike)"
+							:color="likeColor(item.is_like)"
 							@click="updateLike(item)"
 						>
-							<v-icon small class="mr-1" v-text="likeIcon(item.isLike)" />
+							<v-icon small class="mr-1" v-text="likeIcon(item.is_like)" />
 							<span class="subheading mr-2">좋아요</span>
 						</v-btn>
 					</v-col>
@@ -89,11 +89,11 @@ export default Vue.extend({
 		updateLike(item: Answer) {
 			console.log(item);
 		},
-		likeIcon(isLike: boolean) {
-			return isLike ? 'mdi-heart' : 'mdi-heart-outline';
+		likeIcon(is_like: boolean) {
+			return is_like ? 'mdi-heart' : 'mdi-heart-outline';
 		},
-		likeColor(isLike: boolean) {
-			return isLike ? 'error' : 'grey';
+		likeColor(is_like: boolean) {
+			return is_like ? 'error' : 'grey';
 		},
 		hasReaction(item: Answer) {
 			return item.like_count > 0 || item.comment_count > 0;
