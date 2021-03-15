@@ -6,7 +6,7 @@ export interface Answer {
 	emotion_id: number;
 	id: number;
 	is_like: boolean;
-	like: Array<object>;
+	like: Like;
 	like_count: number;
 	updated_at: string;
 	user: User;
@@ -21,4 +21,12 @@ export interface User {
 	uid?: string;
 	created_at?: string;
 	updated_at?: string;
+}
+
+export interface Like {
+	answer_id: number;
+	created_at: string;
+	id: number;
+	user_id: number;
+	user: User;
 }

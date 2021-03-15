@@ -1,10 +1,12 @@
 import { ActionContext } from 'vuex';
 import { Mutations } from './mutations';
 import { RootState } from './state';
-import { fetchAnswer } from '../api/answer';
+import { fetchAnswer, postLike, deleteLike } from '../api/answer';
 
 export enum ActionTypes {
-	FETCH_ANSWER = 'FETCH_ANSWER'
+	FETCH_ANSWER = 'FETCH_ANSWER',
+	POST_LIKE = 'POST_LIKE',
+	DELETE_LIKE = 'DELETE_LIKE'
 }
 
 type MyActionContext = {
@@ -21,6 +23,12 @@ export const actions = {
 	) {
 		const { page, limit } = payload;
 		return await fetchAnswer(page, limit);
+	},
+	async [ActionTypes.POST_LIKE](context: MyActionContext, payload: number) {
+		return await postLike(payload);
+	},
+	async [ActionTypes.DELETE_LIKE](context: MyActionContext, payload: number) {
+		return await deleteLike(payload);
 	}
 };
 

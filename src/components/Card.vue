@@ -55,7 +55,7 @@
 							text
 							block
 							:color="likeColor(item.is_like)"
-							@click="updateLike(item)"
+							@click="handleLike(item)"
 						>
 							<v-icon small class="mr-1" v-text="likeIcon(item.is_like)" />
 							<span class="subheading mr-2">좋아요</span>
@@ -75,19 +75,23 @@
 </template>
 
 <script lang="ts">
-import { Answer } from '@/interfaces';
+import { Answer, Like } from '@/interfaces';
+import { ActionTypes } from '@/store/actions';
+import { remove } from 'lodash-es';
 import Vue, { PropType } from 'vue';
 
 export default Vue.extend({
 	props: {
 		item: Object as PropType<Answer>
 	},
+	computed: {
+		user(): any {
+			return this.$store.getters.getUser;
+		}
+	},
 	methods: {
 		goDetail(id: number) {
 			console.log(id);
-		},
-		updateLike(item: Answer) {
-			console.log(item);
 		},
 		likeIcon(is_like: boolean) {
 			return is_like ? 'mdi-heart' : 'mdi-heart-outline';
@@ -98,6 +102,38 @@ export default Vue.extend({
 		hasReaction(item: Answer) {
 			return item.like_count > 0 || item.comment_count > 0;
 		},
+		handleLike(item: Answer) {
+			if (item.is_like) {
+				console.log(item.like);
+				const myLike = item.like.find(
+					(likeItem: Record<string, any>) => likeItem.user_id === this.user.id
+				);
+				this.deleteLike(myLike);
+			} else {
+				this.postLike(item.id);
+			}
+		},
+		async postLike(id: number) {
+			const response = await this.$store
+				.dispatch(ActionTypes.POST_LIKE, id)
+				.then(response => {
+					return response;
+				});
+			this.item.like.push({
+				id: response.like_id,
+				user_id: this.user.id
+			});
+			this.item.like_count += 1;
+			this.item.is_like = true;
+		},
+		deleteLike(item: Like) {
+			this.$store.dispatch(ActionTypes.DELETE_LIKE, item.id).then(() => {
+				remove(this.item.like, like => {
+					return like.id === item.id;
+				});
+				this.item.like_count -= 1;
+				this.item.is_like = false;
+			});
 		}
 	}
 });
