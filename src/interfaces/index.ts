@@ -9,15 +9,16 @@ export interface Answer {
 	like: Array<object>;
 	like_count: number;
 	updated_at: string;
-	user: Record<string, any>;
+	user: User;
 	user_id: number;
 }
 
 export interface User {
-	displayName: string;
+	id: number;
+	display_name: string;
 	email: string;
-	phoneNumber: string;
 	photoURL: string;
-	providerId: string;
-	uid: string;
+	uid?: string;
+	created_at?: string;
+	updated_at?: string;
 }

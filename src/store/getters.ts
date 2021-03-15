@@ -8,7 +8,7 @@ export const getters = {
 		return state.user;
 	},
 	isUser(state: RootState) {
-		return state.user !== '';
+		return Object.keys(state.user).length === 0;
 	},
 	getAnswer(state: RootState) {
 		return state.answer;

@@ -1,6 +1,8 @@
+import { User } from '../interfaces';
+
 const state = {
 	token: '',
-	user: {},
+	user: {} as User,
 	page: 1,
 	limit: 10,
 	answer: []

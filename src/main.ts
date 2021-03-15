@@ -5,6 +5,7 @@ import store from './store';
 import vuetify from './plugins/vuetify';
 import firebase from './plugins/firebase';
 import './plugins';
+import { fetchUserInfo } from './api/auth';
 Vue.config.productionTip = false;
 
 firebase.default.auth().onAuthStateChanged(async user => {
@@ -16,6 +17,12 @@ firebase.default.auth().onAuthStateChanged(async user => {
 
 		const userInfo = user?.providerData[0];
 		store.commit('SET_USER', userInfo);
+
+		const response = await fetchUserInfo().then(response => {
+			return response;
+		});
+		console.log(response);
+		store.commit('SET_USER', response);
 	}
 
 	new Vue({
