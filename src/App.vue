@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		<v-app id="inspire">
-			<Header v-if="!this.$vuetify.breakpoint.mobile" />
+			<Header />
 
 			<v-main class="grey lighten-3">
 				<v-container>

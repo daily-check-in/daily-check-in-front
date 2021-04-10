@@ -1,12 +1,20 @@
 import { ActionContext } from 'vuex';
 import { Mutations } from './mutations';
 import { RootState } from './state';
-import { fetchAnswer, postLike, deleteLike } from '../api/answer';
+import {
+	fetchAnswer,
+	postLike,
+	deleteLike,
+	fetchEmotion,
+	postAnswer
+} from '../api/answer';
 
 export enum ActionTypes {
 	FETCH_ANSWER = 'FETCH_ANSWER',
 	POST_LIKE = 'POST_LIKE',
-	DELETE_LIKE = 'DELETE_LIKE'
+	DELETE_LIKE = 'DELETE_LIKE',
+	FETCH_EMOTION = 'FETCH_EMOTION',
+	POST_ANSWER = 'POST_ANSWER'
 }
 
 type MyActionContext = {
@@ -29,6 +37,12 @@ export const actions = {
 	},
 	async [ActionTypes.DELETE_LIKE](context: MyActionContext, payload: number) {
 		return await deleteLike(payload);
+	},
+	async [ActionTypes.FETCH_EMOTION]() {
+		return await fetchEmotion();
+	},
+	async [ActionTypes.POST_ANSWER](context: MyActionContext, payload: {}) {
+		return await postAnswer(payload);
 	}
 };
 

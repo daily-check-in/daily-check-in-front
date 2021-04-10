@@ -18,6 +18,9 @@ export const getters = {
 	},
 	getLimit(state: RootState) {
 		return state.limit;
+	},
+	getEmotion(state: RootState) {
+		return state.emotion;
 	}
 };
 

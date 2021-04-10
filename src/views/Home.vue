@@ -1,7 +1,7 @@
 <template>
 	<v-row>
 		<v-col>
-			<v-card class="mb-6">
+			<v-card class="mb-6" @click="goWrite()">
 				<v-card-title class="grey--text">
 					{{ randomTodayText }}
 				</v-card-title>
@@ -86,6 +86,9 @@ export default Vue.extend({
 			} catch {
 				$state.error();
 			}
+		},
+		goWrite() {
+			this.$router.push(`/write`);
 		}
 	},
 	components: { Card }

@@ -19,5 +19,14 @@ export default [
 		name: 'SignIn',
 		component: () =>
 			import(/* webpackChunkName: "signIn" */ '../views/SignIn.vue')
+	},
+	{
+		path: '/write',
+		name: 'Write',
+		meta: {
+			detail: true
+		},
+		component: () =>
+			import(/* webpackChunkName: "write" */ '../views/Write.vue')
 	}
 ];

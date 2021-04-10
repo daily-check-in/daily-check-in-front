@@ -1,13 +1,14 @@
 import { RootState } from './state';
 import { setAxiosToken } from '../plugins/axios';
-import { User } from '../interfaces/index';
+import { User, Emotion } from '../interfaces/index';
 
 export enum MutationTypes {
 	SET_TOKEN = 'SET_TOKEN',
 	SET_USER = 'SET_USER',
 	SET_ANSWER = 'SET_ANSWER',
 	SET_PAGE = 'SET_PAGE',
-	SET_LIMIT = 'SET_LIMIT'
+	SET_LIMIT = 'SET_LIMIT',
+	SET_EMOTION = 'SET_EMOTION'
 }
 
 export const mutations = {
@@ -26,6 +27,9 @@ export const mutations = {
 	},
 	[MutationTypes.SET_LIMIT](state: RootState, limit: number) {
 		state.limit = limit;
+	},
+	[MutationTypes.SET_EMOTION](state: RootState, emotion: Emotion) {
+		state.emotion = emotion;
 	}
 };
 

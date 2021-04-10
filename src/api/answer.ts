@@ -4,7 +4,8 @@ import { Answer } from '../interfaces/index';
 
 const api = {
 	answer: '/answer',
-	like: '/like'
+	like: '/like',
+	emotion: '/emotion'
 };
 
 function fetchAnswer(page: number, limit: number): AxiosPromise<Answer[]> {
@@ -24,4 +25,17 @@ function deleteLike(id: number): AxiosPromise {
 	return instance.delete(url, { params });
 }
 
-export { fetchAnswer, postLike, deleteLike };
+function fetchEmotion(): AxiosPromise {
+	const url = `${api.emotion}`;
+	return instance.get(url);
+}
+
+function postAnswer(data: {
+	emotion_id: number;
+	content: string;
+}): AxiosPromise {
+	const url = `${api.answer}`;
+	return instance.post(url, data);
+}
+
+export { fetchAnswer, postLike, deleteLike, fetchEmotion, postAnswer };

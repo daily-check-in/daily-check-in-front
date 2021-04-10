@@ -30,3 +30,15 @@ export interface Like {
 	user_id: number;
 	user: User;
 }
+
+export interface Emotion {
+	answer: string;
+	comment: string;
+	created_at: string;
+	emoji: string;
+	id: number;
+	name: string;
+	uid: string;
+	updated_at: string;
+	value: number;
+}
