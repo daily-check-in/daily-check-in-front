@@ -1,0 +1,108 @@
+.ql-snow {
+  .ql-picker.ql-header {
+    .ql-picker-item:before,
+    .ql-picker-label:before {
+      content: "본문1";
+      position: relative;
+      top: -2px;
+    }
+    .ql-picker-item[data-value="1"]:before,
+    .ql-picker-label[data-value="1"]:before {
+      content: "제목1";
+    }
+    .ql-picker-item[data-value="2"]:before,
+    .ql-picker-label[data-value="2"]:before {
+      content: "제목2";
+    }
+    .ql-picker-item[data-value="3"]:before,
+    .ql-picker-label[data-value="3"]:before {
+      content: "제목3";
+    }
+    .ql-picker-item[data-value="5"]:before,
+    .ql-picker-label[data-value="5"]:before {
+      content: "본문2";
+    }
+    .ql-picker-item[data-value="6"]:before,
+    .ql-picker-label[data-value="6"]:before {
+      content: "캡션";
+    }
+  }
+
+  &.ql-toolbar,
+  &.ql-container {
+    border: 0;
+  }
+}
+
+.ql-container {
+  font-size: 16px;
+  tab-size: 2;
+
+  ol,
+  ul {
+    padding-left: 0;
+  }
+
+  li.ql-indent-1:not(.ql-direction-rtl) {
+    padding-left: 2.7em;
+  }
+  li.ql-indent-1.ql-direction-rtl.ql-align-right {
+    padding-right: 2.7em;
+  }
+
+  li.ql-indent-2:not(.ql-direction-rtl) {
+    padding-left: 3.9em;
+  }
+  li.ql-indent-2.ql-direction-rtl.ql-align-right {
+    padding-right: 3.9em;
+  }
+
+  li.ql-indent-3:not(.ql-direction-rtl) {
+    padding-left: 5.1em;
+  }
+  li.ql-indent-3.ql-direction-rtl.ql-align-right {
+    padding-left: 5.1em;
+  }
+
+  li.ql-indent-4:not(.ql-direction-rtl) {
+    padding-left: 6.3em;
+  }
+  li.ql-indent-4.ql-direction-rtl.ql-align-right {
+    padding-left: 6.3em;
+  }
+
+  li.ql-indent-5:not(.ql-direction-rtl) {
+    padding-left: 7.5em;
+  }
+  li.ql-indent-5.ql-direction-rtl.ql-align-right {
+    padding-left: 7.5em;
+  }
+
+  li.ql-indent-6:not(.ql-direction-rtl) {
+    padding-left: 8.7em;
+  }
+  li.ql-indent-6.ql-direction-rtl.ql-align-right {
+    padding-left: 8.7em;
+  }
+
+  li.ql-indent-7:not(.ql-direction-rtl) {
+    padding-left: 9.9em;
+  }
+  li.ql-indent-7.ql-direction-rtl.ql-align-right {
+    padding-left: 9.9em;
+  }
+
+  li.ql-indent-8:not(.ql-direction-rtl) {
+    padding-left: 11.1em;
+  }
+  li.ql-indent-8.ql-direction-rtl.ql-align-right {
+    padding-left: 11.1em;
+  }
+
+  li.ql-indent-9:not(.ql-direction-rtl) {
+    padding-left: 11.1em;
+  }
+  li.ql-indent-9.ql-direction-rtl.ql-align-right {
+    padding-right: 11.1em;
+  }
+}
