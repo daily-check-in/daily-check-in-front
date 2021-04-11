@@ -82,7 +82,7 @@ export default writeMixin.extend({
 		}
 	},
 	beforeDestroy() {
-		eventBus.$off('postAnswer');
+		eventBus.$off('submitAnswer');
 	},
 	methods: {
 		async fetchEmotion() {
@@ -117,18 +117,13 @@ export default writeMixin.extend({
 						return response;
 					});
 
-				console.log(response);
+				// console.log(response);
 				const { content, emotion_id, id } = response;
 				this.content = content;
 				this.answerId = id;
-				console.log(this.orderByRandomEmotion);
+				// console.log(this.orderByRandomEmotion);
 				this.emotionItem = this.orderByRandomEmotion.findIndex(
 					(item: { id: number }) => item.id === emotion_id
-				);
-				console.log(
-					this.orderByRandomEmotion.findIndex(
-						(item: { id: number }) => item.id === emotion_id
-					)
 				);
 			} catch (e) {
 				console.log(e);
@@ -148,11 +143,15 @@ export default writeMixin.extend({
 					emotion_id: this.orderByRandomEmotion[this.emotionItem].id,
 					content: this.content
 				};
-				await this.$store
+				const response = await this.$store
 					.dispatch(ActionTypes.UPDATE_ANSWER, data)
 					.then(response => {
-						console.log(response);
+						return response;
 					});
+				// console.log(response);
+				if (typeof response !== 'undefined') {
+					this.$router.go(-1);
+				}
 			} catch (e) {
 				console.log(e);
 			}
@@ -163,11 +162,15 @@ export default writeMixin.extend({
 					emotion_id: this.orderByRandomEmotion[this.emotionItem].id,
 					content: this.content
 				};
-				await this.$store
+				const response = await this.$store
 					.dispatch(ActionTypes.POST_ANSWER, data)
 					.then(response => {
-						console.log(response);
+						return response;
 					});
+				// console.log(response);
+				if (typeof response !== 'undefined') {
+					this.$router.go(-1);
+				}
 			} catch (e) {
 				console.log(e);
 			}

@@ -11,6 +11,7 @@ import Vue from 'vue';
 import firebase from 'firebase';
 
 export default Vue.extend({
+	name: 'SignIn',
 	methods: {
 		signInWithGoogle() {
 			const provider = new firebase.auth.GoogleAuthProvider();

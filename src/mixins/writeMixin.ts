@@ -14,8 +14,5 @@ export default Vue.extend({
 		$_writeButtonName(): string {
 			return `${this.$_isModify ? '수정' : '작성'}하기`;
 		}
-	},
-	created() {
-		console.log();
 	}
 });
