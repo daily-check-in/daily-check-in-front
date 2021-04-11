@@ -1,11 +1,19 @@
 <template>
 	<v-row>
 		<v-col>
-			<v-card class="mb-6" @click="goWrite()">
-				<v-card-title class="grey--text">
-					{{ randomTodayText }}
-				</v-card-title>
-			</v-card>
+			<v-hover v-slot="{ hover }">
+				<v-card
+					:elevation="hover ? 6 : 2"
+					:class="{ 'on-hover': hover }"
+					class="mb-6"
+					@click="goWrite()"
+				>
+					<v-card-title class="grey--text">
+						{{ randomTodayText }}
+					</v-card-title>
+				</v-card>
+			</v-hover>
+
 			<Card
 				v-for="(item, index) in answerItems"
 				:key="`card-${index}`"
