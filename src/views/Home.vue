@@ -18,8 +18,11 @@
 				v-for="(item, index) in answerItems"
 				:key="`card-${index}`"
 				:item="item"
+				:reply.sync="reply[index]"
 				class="mb-6"
 				@deleteAnswer="deleteAnswer(...arguments)"
+				@showReply="showReply(...arguments)"
+				@postReply="postReply(...arguments)"
 			/>
 			<infinite-loading spinner="waveDots" @infinite="infiniteHandler" />
 		</v-col>
@@ -32,12 +35,14 @@ import Card from '@/components/Card.vue';
 import { ActionTypes } from '@/store/actions';
 import { MutationTypes } from '@/store/mutations';
 import { User } from '@/interfaces';
+import { hasOwnProperty } from '@/utils/hasOwnProperty';
 
 export default Vue.extend({
 	name: 'Home',
 	data() {
 		return {
-			infiniteId: +new Date()
+			infiniteId: +new Date(),
+			reply: []
 		};
 	},
 	computed: {
@@ -85,6 +90,10 @@ export default Vue.extend({
 					.then(({ data }) => {
 						if (data.data.length > 0) {
 							this.$store.commit(MutationTypes.SET_PAGE, this.page + 1);
+							this.reply = [
+								...this.reply,
+								...Array.from({ length: data.data.length }, () => '')
+							];
 							this.$store.commit(MutationTypes.SET_ANSWER, [
 								...this.answerItems,
 								...data.data
@@ -123,6 +132,74 @@ export default Vue.extend({
 				this.$dialog.notify.error('오류입니다. 다시 시도해주세요.', {
 					position: 'top-right'
 				});
+			}
+		},
+		async showReply(id: number) {
+			console.log(id);
+			try {
+				const params = { answer_id: id };
+				const { data, status } = await this.$store
+					.dispatch(ActionTypes.FETCH_ANSWER, params)
+					.then(response => {
+						return response;
+					});
+				console.log(data);
+				if (status === 200) {
+					const { comment } = data;
+					const index = this.answerItems.findIndex(
+						(item: { id: number }) => item.id === id
+					);
+					const payload = {
+						index,
+						comment
+					};
+					this.$store.commit(MutationTypes.SET_REPLY, payload);
+				}
+			} catch (e) {
+				console.log(e);
+			} finally {
+				this.$forceUpdate();
+			}
+		},
+		async postReply(id: number, reply: string) {
+			try {
+				const index = this.answerItems.findIndex(
+					(item: { id: number }) => item.id === id
+				);
+				const payload = {
+					answer_id: id,
+					content: reply
+				};
+				const { data, status } = await this.$store
+					.dispatch(ActionTypes.POST_REPLY, payload)
+					.then(response => {
+						return response;
+					});
+				console.log(data, status);
+				if (status === 204) {
+					let comment: {}[] = [];
+					if (hasOwnProperty(this.answerItems[index], 'comment')) {
+						comment = [...this.answerItems[index].comment];
+					}
+					comment.push({
+						answer_id: id,
+						content: reply,
+						user: this.user,
+						user_id: this.user.id
+					});
+
+					const payload = {
+						index,
+						comment
+					};
+					this.$store.commit(MutationTypes.SET_REPLY, payload);
+					this.answerItems[index].comment_count += 1;
+					this.reply[index] = '';
+				}
+			} catch (e) {
+				console.log(e);
+			} finally {
+				this.$forceUpdate();
 			}
 		}
 	},

@@ -9,7 +9,8 @@ export enum MutationTypes {
 	SET_PAGE = 'SET_PAGE',
 	SET_LIMIT = 'SET_LIMIT',
 	SET_EMOTION = 'SET_EMOTION',
-	REMOVE_OBJECT_FROM_ARRAY = 'REMOVE_OBJECT_FROM_ARRAY'
+	REMOVE_OBJECT_FROM_ARRAY = 'REMOVE_OBJECT_FROM_ARRAY',
+	SET_REPLY = 'SET_REPLY',
 	SET_LOADING = 'SET_LOADING'
 }
 
@@ -38,6 +39,17 @@ export const mutations = {
 			.map((item: { id: number }) => item.id)
 			.indexOf(id);
 		state.answer.splice(index, 1);
+	},
+	[MutationTypes.SET_REPLY](
+		state: RootState,
+		payload: { index: number; comment: object }
+	) {
+		console.log(payload.index);
+		state.answer[payload.index] = Object.assign(
+			{},
+			state.answer[payload.index],
+			{ comment: payload.comment }
+		);
 	},
 	[MutationTypes.SET_LOADING](state: RootState, isLoading: boolean) {
 		state.isLoading = isLoading;

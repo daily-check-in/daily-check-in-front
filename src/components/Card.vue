@@ -59,16 +59,25 @@
 				v-show="hasReaction(item)"
 				class="mt-2 d-flex align-center justify-space-between"
 			>
-				<div v-show="item.like_count > 0" class="flex align-center">
-					<v-icon small color="error" class="mr-1">
-						mdi-heart
-					</v-icon>
-					<span class="subheading mr-2">{{ item.like_count }}</span>
+				<div>
+					<div v-if="item.like_count > 0" class="d-flex align-center pa-0 pl-1">
+						<v-icon small color="error" class="mr-1">
+							mdi-heart
+						</v-icon>
+						<span class="subheading grey--text">{{ item.like_count }}</span>
+					</div>
 				</div>
-				<div v-show="item.comment_count > 0">
+
+				<v-btn
+					v-show="item.comment_count > 0"
+					text
+					small
+					class="px-1 grey--text"
+					@click="showReply(item.id)"
+				>
 					댓글
 					{{ item.comment_count }}개
-				</div>
+				</v-btn>
 			</div>
 		</v-card-text>
 
@@ -90,7 +99,7 @@
 					</v-col>
 					<v-divider vertical class="my-4" />
 					<v-col>
-						<v-btn text block color="grey" @click="goDetail(item.id)">
+						<v-btn text block color="grey" @click="setReplyFocus()">
 							<v-icon small class="mr-1">mdi-comment-outline</v-icon>
 							<span class="subheading">댓글 달기</span>
 						</v-btn>
@@ -98,6 +107,88 @@
 				</v-row>
 			</v-list-item>
 		</v-card-actions>
+
+		<v-card-text class="py-0">
+			<v-divider />
+		</v-card-text>
+
+		<!-- 댓글 달기 -->
+		<v-card-text class="py-2 d-flex">
+			<v-textarea
+				:ref="`textarea-${item.id}`"
+				v-model="sync_reply"
+				:placeholder="item.emotion.comment"
+				filled
+				flat
+				rounded
+				auto-grow
+				dense
+				hide-details
+				color="success"
+				class="v-card__text mr-2"
+				rows="1"
+				row-height="12"
+			>
+			</v-textarea>
+			<v-btn
+				icon
+				color="success"
+				:disabled="reply === ''"
+				@click="handleReplySubmit()"
+			>
+				<v-icon>mdi-send</v-icon>
+			</v-btn>
+		</v-card-text>
+
+		<!-- 댓글들 -->
+		<v-card-text v-if="item.comment" class="pt-0 py-2 pr-2">
+			<v-list class="py-0">
+				<template v-for="(reply, index) in item.comment">
+					<v-list-item :key="`reply-${index}`" class="px-0">
+						<v-list-item-avatar size="30" class="align-self-start mr-2">
+							<v-img :src="reply.user.photoURL" />
+						</v-list-item-avatar>
+
+						<v-list-item-content class="d-inline-block py-1">
+							<v-alert
+								class="pa-2 px-4 mb-0 mr-1 d-inline-block"
+								color="grey lighten-4 rounded-xl"
+								style="max-width: calc(100% - 26px)"
+							>
+								<div class="text-caption">
+									<span class="font-weight-bold">
+										{{
+											reply.user.display_name || reply.user.email.split('@')[0]
+										}}
+									</span>
+									<span class="grey--text">{{ reply.created_at }}</span>
+								</div>
+								<div class="text-body-2" v-html="reply.content" />
+							</v-alert>
+
+							<v-menu v-if="isMyContent(reply.user_id)" bottom left>
+								<template v-slot:activator="{ on, attrs }">
+									<v-btn icon x-small v-bind="attrs" v-on="on">
+										<v-icon>mdi-dots-vertical</v-icon>
+									</v-btn>
+								</template>
+
+								<v-list>
+									<v-list-item
+										v-for="(menu, index) in privateMenu"
+										:key="`private-menu-${index}`"
+										class="py-0 px-2"
+										@click="handleMyAnswer(menu, item.id)"
+									>
+										<v-btn text>{{ menu }}</v-btn>
+									</v-list-item>
+								</v-list>
+							</v-menu>
+						</v-list-item-content>
+					</v-list-item>
+				</template>
+			</v-list>
+		</v-card-text>
 	</v-card>
 </template>
 
@@ -109,7 +200,12 @@ import Vue, { PropType } from 'vue';
 
 export default Vue.extend({
 	props: {
-		item: Object as PropType<Answer>
+		item: {
+			type: Object as PropType<Answer>
+		},
+		reply: {
+			type: undefined
+		}
 	},
 	data() {
 		return {
@@ -119,6 +215,14 @@ export default Vue.extend({
 	computed: {
 		user(): User {
 			return this.$store.getters.getUser;
+		},
+		sync_reply: {
+			get() {
+				return this.reply;
+			},
+			set(value) {
+				this.$emit('update:reply', value);
+			}
 		}
 	},
 	methods: {
@@ -195,6 +299,21 @@ export default Vue.extend({
 					this.$emit('deleteAnswer', id);
 				}
 			}
+		},
+		showReply(id: number) {
+			this.$emit('showReply', id);
+		},
+		setReplyFocus() {
+			this.$refs[`textarea-${this.item.id}`].focus();
+		},
+		handleReplySubmit() {
+			this.postReply();
+		},
+		postReply() {
+			this.$emit('postReply', this.item.id, this.reply);
+		},
+		updateInput(event: { target: { value: string } }) {
+			this.$emit('input', event.target.value);
 		}
 	}
 });

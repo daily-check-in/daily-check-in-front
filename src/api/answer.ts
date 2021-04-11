@@ -5,7 +5,8 @@ import { Answer } from '../interfaces/index';
 const api = {
 	answer: '/answer',
 	like: '/like',
-	emotion: '/emotion'
+	emotion: '/emotion',
+	reply: '/comment'
 };
 
 function fetchAnswerItems(page: number, limit: number): AxiosPromise<Answer[]> {
@@ -57,6 +58,11 @@ function deleteAnswer(data: { answer_id: number }): AxiosPromise {
 	return instance.delete(url, data);
 }
 
+function postReply(data: { answer_id: number; content: string }): AxiosPromise {
+	const url = `${api.reply}`;
+	return instance.post(url, data);
+}
+
 export {
 	fetchAnswerItems,
 	postLike,
@@ -65,5 +71,6 @@ export {
 	postAnswer,
 	fetchAnswer,
 	updateAnswer,
-	deleteAnswer
+	deleteAnswer,
+	postReply
 };
