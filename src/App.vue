@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		<v-app id="inspire">
-			<Header />
+			<Header v-if="isShowHeader" />
 
 			<v-main class="grey lighten-3">
 				<v-container>
@@ -49,6 +49,13 @@ export default Vue.extend({
 	computed: {
 		computedContainerCols() {
 			return this.$vuetify.breakpoint.mobile ? 12 : 8;
+		},
+		isShowHeader(): boolean {
+			if (this.$vuetify.breakpoint.mobile) {
+				return this.$route.meta.detail;
+			} else {
+				return true;
+			}
 		}
 	},
 	components: { Header, LoadingOverlay }
