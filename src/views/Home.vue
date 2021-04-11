@@ -70,7 +70,7 @@ export default Vue.extend({
 					limit: this.limit
 				};
 				this.$store
-					.dispatch(ActionTypes.FETCH_ANSWER, payload)
+					.dispatch(ActionTypes.FETCH_ANSWER_ITEMS, payload)
 					.then(({ data }) => {
 						if (data.length > 0) {
 							this.$store.commit(MutationTypes.SET_PAGE, this.page + 1);

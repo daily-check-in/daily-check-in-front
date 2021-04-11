@@ -21,7 +21,7 @@ export default [
 			import(/* webpackChunkName: "signIn" */ '../views/SignIn.vue')
 	},
 	{
-		path: '/write',
+		path: '/write/:id?',
 		name: 'Write',
 		meta: {
 			detail: true

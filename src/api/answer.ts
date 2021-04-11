@@ -8,7 +8,7 @@ const api = {
 	emotion: '/emotion'
 };
 
-function fetchAnswer(page: number, limit: number): AxiosPromise<Answer[]> {
+function fetchAnswerItems(page: number, limit: number): AxiosPromise<Answer[]> {
 	const url = `${api.answer}?page=${page}&limit=${limit}`;
 	return instance.get(url);
 }
@@ -38,4 +38,26 @@ function postAnswer(data: {
 	return instance.post(url, data);
 }
 
-export { fetchAnswer, postLike, deleteLike, fetchEmotion, postAnswer };
+function fetchAnswer(params: { answer_id: number }): AxiosPromise {
+	const url = `${api.answer}/${params.answer_id}`;
+	return instance.get(url);
+}
+
+function updateAnswer(data: {
+	answer_id: number;
+	emotion_id: number;
+	content: string;
+}): AxiosPromise {
+	const url = `${api.answer}`;
+	return instance.patch(url, data);
+}
+
+export {
+	fetchAnswerItems,
+	postLike,
+	deleteLike,
+	fetchEmotion,
+	postAnswer,
+	fetchAnswer,
+	updateAnswer
+};

@@ -8,25 +8,21 @@
 			<v-icon>mdi-arrow-left</v-icon>
 		</v-app-bar-nav-icon>
 		<v-spacer />
-		<v-btn v-if="isWritePage" text color="white" @click="postAnswer()">
-			작성완료
+		<v-btn v-if="$_isWritePage" text color="white" @click="postAnswer()">
+			{{ $_writeButtonName }}
 		</v-btn>
 	</v-container>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
 import eventBus from '../../utils/bus';
+import writeMixin from '../../mixins/writeMixin';
 
-export default Vue.extend({
-	computed: {
-		isWritePage() {
-			return this.$route.name === 'Write';
-		}
-	},
+export default writeMixin.extend({
+	computed: {},
 	methods: {
 		postAnswer() {
-			eventBus.$emit('postAnswer');
+			eventBus.$emit('submitAnswer', this.$_isModify);
 		}
 	}
 });

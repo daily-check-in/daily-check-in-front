@@ -6,11 +6,32 @@
 			</v-list-item-avatar>
 
 			<v-list-item-content>
-				<v-list-item-title>{{ item.user.display_name }}</v-list-item-title>
+				<v-list-item-title>
+					{{ item.user.display_name }}
+				</v-list-item-title>
 				<v-list-item-subtitle class="grey--text">
 					{{ item.created_at }}
 				</v-list-item-subtitle>
 			</v-list-item-content>
+
+			<v-menu v-if="isMyAnswer(item.user.id)" bottom left>
+				<template v-slot:activator="{ on, attrs }">
+					<v-btn icon v-bind="attrs" v-on="on">
+						<v-icon>mdi-dots-vertical</v-icon>
+					</v-btn>
+				</template>
+
+				<v-list>
+					<v-list-item
+						v-for="(menu, index) in privateMenu"
+						:key="`private-menu-${index}`"
+						class="py-0 px-2"
+						@click="handleMyAnswer(menu, item.id)"
+					>
+						<v-btn text>{{ menu }}</v-btn>
+					</v-list-item>
+				</v-list>
+			</v-menu>
 		</v-list-item>
 
 		<v-card-text class="py-2">
@@ -84,6 +105,11 @@ export default Vue.extend({
 	props: {
 		item: Object as PropType<Answer>
 	},
+	data() {
+		return {
+			privateMenu: ['수정', '삭제']
+		};
+	},
 	computed: {
 		user(): any {
 			return this.$store.getters.getUser;
@@ -134,6 +160,14 @@ export default Vue.extend({
 				this.item.like_count -= 1;
 				this.item.is_like = false;
 			});
+		},
+		isMyAnswer(user_id: number) {
+			return user_id === this.user.id;
+		},
+		handleMyAnswer(menu: string, id: number) {
+			if (menu === '수정') {
+				this.$router.push(`/write/${id}`);
+			}
 		}
 	}
 });

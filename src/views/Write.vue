@@ -27,9 +27,9 @@
 				color="success"
 				:disabled="isValid"
 				class="float-right"
-				@click="postAnswer"
+				@click="handleSubmit()"
 			>
-				작성완료
+				{{ $_writeButtonName }}
 			</v-btn>
 		</v-col>
 	</v-row>
@@ -37,17 +37,18 @@
 
 <script lang="ts">
 import Editor from '@/components/Editor.vue';
-import Vue from 'vue';
 import { ActionTypes } from '@/store/actions';
 import { MutationTypes } from '@/store/mutations';
 import eventBus from '../utils/bus';
+import writeMixin from '../mixins/writeMixin';
 
-export default Vue.extend({
+export default writeMixin.extend({
 	name: 'Write',
 	data() {
 		return {
 			content: '',
-			emotionItem: 0
+			emotionItem: 0,
+			answerId: null
 		};
 	},
 	computed: {
@@ -59,28 +60,96 @@ export default Vue.extend({
 		},
 		isValid() {
 			return this.content === '';
+		},
+		hasEmotion() {
+			return this.$store.getters.hasEmotion;
 		}
 	},
-	created() {
-		this.fetchEmotion();
+	async created() {
+		if (!this.hasEmotion) {
+			await this.fetchEmotion();
+		}
 		this.setEventBus();
+
+		if (this.$_isModify) {
+			await this.fetchAnswer();
+		}
 	},
 	beforeDestroy() {
 		eventBus.$off('postAnswer');
 	},
 	methods: {
-		fetchEmotion() {
+		async fetchEmotion() {
 			try {
-				this.$store.dispatch(ActionTypes.FETCH_EMOTION).then(response => {
-					this.$store.commit(MutationTypes.SET_EMOTION, response);
-					console.log(response);
-				});
+				const response = await this.$store
+					.dispatch(ActionTypes.FETCH_EMOTION)
+					.then(response => {
+						return response;
+					});
+				console.log(response);
+
+				this.$store.commit(MutationTypes.SET_EMOTION, response);
 			} catch (e) {
 				console.log(e);
 			}
 		},
 		setEventBus() {
-			eventBus.$on('postAnswer', this.postAnswer);
+			eventBus.$on('submitAnswer', (payload: boolean) => {
+				if (payload) {
+					this.updateAnswer();
+				} else {
+					this.postAnswer();
+				}
+			});
+		},
+		async fetchAnswer() {
+			try {
+				const params = { answer_id: this.$route.params.id };
+				const response = await this.$store
+					.dispatch(ActionTypes.FETCH_ANSWER, params)
+					.then(response => {
+						return response;
+					});
+
+				console.log(response);
+				const { content, emotion_id, id } = response;
+				this.content = content;
+				this.answerId = id;
+				console.log(this.emotion);
+				this.emotionItem = this.emotion.findIndex(
+					(item: { id: number }) => item.id === emotion_id
+				);
+				console.log(
+					this.emotion.findIndex(
+						(item: { id: number }) => item.id === emotion_id
+					)
+				);
+			} catch (e) {
+				console.log(e);
+			}
+		},
+		handleSubmit() {
+			if (this.$_isModify) {
+				this.updateAnswer();
+			} else {
+				this.postAnswer();
+			}
+		},
+		async updateAnswer() {
+			try {
+				const data = {
+					answer_id: this.answerId,
+					emotion_id: this.emotion[this.emotionItem].id,
+					content: this.content
+				};
+				await this.$store
+					.dispatch(ActionTypes.UPDATE_ANSWER, data)
+					.then(response => {
+						console.log(response);
+					});
+			} catch (e) {
+				console.log(e);
+			}
 		},
 		async postAnswer() {
 			try {
@@ -88,9 +157,11 @@ export default Vue.extend({
 					emotion_id: this.emotion[this.emotionItem].id,
 					content: this.content
 				};
-				await this.$store.dispatch(ActionTypes.POST_ANSWER, data).then(res => {
-					console.log(res);
-				});
+				await this.$store
+					.dispatch(ActionTypes.POST_ANSWER, data)
+					.then(response => {
+						console.log(response);
+					});
 			} catch (e) {
 				console.log(e);
 			}

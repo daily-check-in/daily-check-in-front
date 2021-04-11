@@ -21,6 +21,9 @@ export const getters = {
 	},
 	getEmotion(state: RootState) {
 		return state.emotion;
+	},
+	hasEmotion(state: RootState) {
+		return state.emotion.length > 0;
 	}
 };
 
