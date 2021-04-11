@@ -87,14 +87,15 @@ export default writeMixin.extend({
 	methods: {
 		async fetchEmotion() {
 			try {
-				const response = await this.$store
+				const { data, status } = await this.$store
 					.dispatch(ActionTypes.FETCH_EMOTION)
 					.then(response => {
 						return response;
 					});
-				console.log(response);
-
-				this.$store.commit(MutationTypes.SET_EMOTION, response);
+				// console.log(data);
+				if (status === 200) {
+					this.$store.commit(MutationTypes.SET_EMOTION, data);
+				}
 			} catch (e) {
 				console.log(e);
 			}
@@ -111,20 +112,20 @@ export default writeMixin.extend({
 		async fetchAnswer() {
 			try {
 				const params = { answer_id: this.$route.params.id };
-				const response = await this.$store
+				const { data, status } = await this.$store
 					.dispatch(ActionTypes.FETCH_ANSWER, params)
 					.then(response => {
 						return response;
 					});
-
-				// console.log(response);
-				const { content, emotion_id, id } = response;
-				this.content = content;
-				this.answerId = id;
-				// console.log(this.orderByRandomEmotion);
-				this.emotionItem = this.orderByRandomEmotion.findIndex(
-					(item: { id: number }) => item.id === emotion_id
-				);
+				// console.log(data);
+				if (status === 200) {
+					const { content, emotion_id, id } = data;
+					this.content = content;
+					this.answerId = id;
+					this.emotionItem = this.orderByRandomEmotion.findIndex(
+						(item: { id: number }) => item.id === emotion_id
+					);
+				}
 			} catch (e) {
 				console.log(e);
 			}
@@ -143,13 +144,13 @@ export default writeMixin.extend({
 					emotion_id: this.orderByRandomEmotion[this.emotionItem].id,
 					content: this.content
 				};
-				const response = await this.$store
+				const { status } = await this.$store
 					.dispatch(ActionTypes.UPDATE_ANSWER, data)
 					.then(response => {
 						return response;
 					});
-				// console.log(response);
-				if (typeof response !== 'undefined') {
+				// console.log(status);
+				if (status === 204) {
 					this.$router.go(-1);
 				}
 			} catch (e) {
@@ -162,13 +163,13 @@ export default writeMixin.extend({
 					emotion_id: this.orderByRandomEmotion[this.emotionItem].id,
 					content: this.content
 				};
-				const response = await this.$store
+				const { status } = await this.$store
 					.dispatch(ActionTypes.POST_ANSWER, data)
 					.then(response => {
 						return response;
 					});
-				// console.log(response);
-				if (typeof response !== 'undefined') {
+				// console.log(status);
+				if (status === 204) {
 					this.$router.go(-1);
 				}
 			} catch (e) {

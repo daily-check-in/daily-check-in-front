@@ -8,6 +8,14 @@ import './plugins';
 import { fetchUserInfo } from './api/auth';
 Vue.config.productionTip = false;
 
+// async fetchUserInfo() {
+// 	const response = await fetchUserInfo().then(({ data }) => {
+// 		console.log(data);
+// 		return data;
+// 	});
+// 	// console.log(userInfo);
+// }
+
 firebase.default.auth().onAuthStateChanged(async user => {
 	// console.log(user);
 	if (user) {
@@ -18,11 +26,11 @@ firebase.default.auth().onAuthStateChanged(async user => {
 		const userInfo = user?.providerData[0];
 		store.commit('SET_USER', userInfo);
 
-		const response = await fetchUserInfo().then(response => {
+		const { data } = await fetchUserInfo().then(response => {
 			return response;
 		});
-		console.log(response);
-		store.commit('SET_USER', response);
+		console.log(data);
+		store.commit('SET_USER', data);
 	}
 
 	new Vue({

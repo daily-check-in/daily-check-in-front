@@ -16,7 +16,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
 	response => {
 		store.commit(MutationTypes.SET_LOADING, false);
-		return response.data;
+		return response;
 	},
 	error => {
 		store.commit(MutationTypes.SET_LOADING, false);

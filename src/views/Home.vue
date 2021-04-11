@@ -58,7 +58,8 @@ export default Vue.extend({
 			const textItems = [
 				', 오늘 하루는 어떠셨나요?',
 				'의 하루가 궁금해요!',
-				', 고민거리 있으세요?'
+				', 고민거리 있으세요?',
+				', 무슨 생각을 하고 계신가요'
 			];
 			const randomNumber = Math.floor(Math.random() * (textItems.length - 0));
 			return `${userName}님${textItems[randomNumber]}`;
@@ -82,11 +83,11 @@ export default Vue.extend({
 				this.$store
 					.dispatch(ActionTypes.FETCH_ANSWER_ITEMS, payload)
 					.then(({ data }) => {
-						if (data.length > 0) {
+						if (data.data.length > 0) {
 							this.$store.commit(MutationTypes.SET_PAGE, this.page + 1);
 							this.$store.commit(MutationTypes.SET_ANSWER, [
 								...this.answerItems,
-								...data
+								...data.data
 							]);
 							$state.loaded();
 						} else {

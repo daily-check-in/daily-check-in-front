@@ -7,14 +7,14 @@
 
 			<v-list-item-content>
 				<v-list-item-title>
-					{{ item.user.display_name }}
+					{{ item.user.display_name || item.user.email.split('@')[0] }}
 				</v-list-item-title>
 				<v-list-item-subtitle class="grey--text">
 					{{ item.created_at }}
 				</v-list-item-subtitle>
 			</v-list-item-content>
 
-			<v-menu v-if="isMyAnswer(item.user.id)" bottom left>
+			<v-menu v-if="isMyContent(item.user.id)" bottom left>
 				<template v-slot:activator="{ on, attrs }">
 					<v-btn icon v-bind="attrs" v-on="on">
 						<v-icon>mdi-dots-vertical</v-icon>
@@ -42,7 +42,13 @@
 					</div>
 					<div
 						class="black--text subtitle-2"
-						v-html="`${item.user.display_name}님은 ${item.emotion.answer}`"
+						v-html="
+							`${
+								item.user.display_name
+									? `${item.user.display_name}님은`
+									: '저는'
+							} ${item.emotion.answer}`
+						"
 					/>
 				</div>
 			</v-alert>
@@ -140,28 +146,41 @@ export default Vue.extend({
 			}
 		},
 		async postLike(id: number) {
-			const response = await this.$store
-				.dispatch(ActionTypes.POST_LIKE, id)
+			try {
+				const { data, status } = await this.$store
+					.dispatch(ActionTypes.POST_LIKE, id)
+					.then(response => {
+						return response;
+					});
+
+				if (status === 200) {
+					this.item.like.push({
+						id: data.like_id,
+						user_id: this.user.id
+					});
+					this.item.like_count += 1;
+					this.item.is_like = true;
+				}
+			} catch (e) {
+				console.log(e);
+			}
+		},
+		async deleteLike(item: Like) {
+			const { status } = await this.$store
+				.dispatch(ActionTypes.DELETE_LIKE, item.id)
 				.then(response => {
 					return response;
 				});
-			this.item.like.push({
-				id: response.like_id,
-				user_id: this.user.id
-			});
-			this.item.like_count += 1;
-			this.item.is_like = true;
-		},
-		deleteLike(item: Like) {
-			this.$store.dispatch(ActionTypes.DELETE_LIKE, item.id).then(() => {
+
+			if (status === 204) {
 				remove(this.item.like, like => {
 					return like.id === item.id;
 				});
 				this.item.like_count -= 1;
 				this.item.is_like = false;
-			});
+			}
 		},
-		isMyAnswer(user_id: number) {
+		isMyContent(user_id: number) {
 			return user_id === this.user.id;
 		},
 		async handleMyAnswer(menu: string, id: number) {
