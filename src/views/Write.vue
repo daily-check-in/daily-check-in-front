@@ -11,7 +11,7 @@
 					active-class="success success--text font-weight-bold"
 					class="px-2"
 				>
-					<v-chip v-for="item in emotion" :key="item.id" outlined>
+					<v-chip v-for="item in orderByRandomEmotion" :key="item.id" outlined>
 						<span class="text-h6 mr-1"> {{ item.emoji }}</span>
 						{{ item.name }}
 					</v-chip>
@@ -41,6 +41,7 @@ import { ActionTypes } from '@/store/actions';
 import { MutationTypes } from '@/store/mutations';
 import eventBus from '../utils/bus';
 import writeMixin from '../mixins/writeMixin';
+import { Emotion } from '@/interfaces';
 
 export default writeMixin.extend({
 	name: 'Write',
@@ -52,8 +53,13 @@ export default writeMixin.extend({
 		};
 	},
 	computed: {
-		emotion() {
+		emotion(): Emotion {
 			return this.$store.getters.getEmotion;
+		},
+		orderByRandomEmotion() {
+			return this.emotion.sort(() => {
+				return Math.random() - Math.random();
+			});
 		},
 		placeholder() {
 			return '느낀 점과 배운 점, 팀에 공유하고 싶은 말이 있으면 알려주세요.';
@@ -115,12 +121,12 @@ export default writeMixin.extend({
 				const { content, emotion_id, id } = response;
 				this.content = content;
 				this.answerId = id;
-				console.log(this.emotion);
-				this.emotionItem = this.emotion.findIndex(
+				console.log(this.orderByRandomEmotion);
+				this.emotionItem = this.orderByRandomEmotion.findIndex(
 					(item: { id: number }) => item.id === emotion_id
 				);
 				console.log(
-					this.emotion.findIndex(
+					this.orderByRandomEmotion.findIndex(
 						(item: { id: number }) => item.id === emotion_id
 					)
 				);
@@ -139,7 +145,7 @@ export default writeMixin.extend({
 			try {
 				const data = {
 					answer_id: this.answerId,
-					emotion_id: this.emotion[this.emotionItem].id,
+					emotion_id: this.orderByRandomEmotion[this.emotionItem].id,
 					content: this.content
 				};
 				await this.$store
@@ -154,7 +160,7 @@ export default writeMixin.extend({
 		async postAnswer() {
 			try {
 				const data = {
-					emotion_id: this.emotion[this.emotionItem].id,
+					emotion_id: this.orderByRandomEmotion[this.emotionItem].id,
 					content: this.content
 				};
 				await this.$store
