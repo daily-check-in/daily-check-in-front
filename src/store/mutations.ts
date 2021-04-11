@@ -1,6 +1,6 @@
 import { RootState } from './state';
 import { setAxiosToken } from '../plugins/axios';
-import { User, Emotion } from '../interfaces/index';
+import { User, Emotion, Answer } from '../interfaces/index';
 
 export enum MutationTypes {
 	SET_TOKEN = 'SET_TOKEN',
@@ -8,7 +8,8 @@ export enum MutationTypes {
 	SET_ANSWER = 'SET_ANSWER',
 	SET_PAGE = 'SET_PAGE',
 	SET_LIMIT = 'SET_LIMIT',
-	SET_EMOTION = 'SET_EMOTION'
+	SET_EMOTION = 'SET_EMOTION',
+	REMOVE_OBJECT_FROM_ARRAY = 'REMOVE_OBJECT_FROM_ARRAY'
 }
 
 export const mutations = {
@@ -19,7 +20,7 @@ export const mutations = {
 	[MutationTypes.SET_USER](state: RootState, user: User) {
 		state.user = user;
 	},
-	[MutationTypes.SET_ANSWER](state: RootState, answer: any) {
+	[MutationTypes.SET_ANSWER](state: RootState, answer: Answer) {
 		state.answer = answer;
 	},
 	[MutationTypes.SET_PAGE](state: RootState, page: number) {
@@ -30,6 +31,12 @@ export const mutations = {
 	},
 	[MutationTypes.SET_EMOTION](state: RootState, emotion: Emotion) {
 		state.emotion = emotion;
+	},
+	[MutationTypes.REMOVE_OBJECT_FROM_ARRAY](state: RootState, id: number) {
+		const index = state.answer
+			.map((item: { id: number }) => item.id)
+			.indexOf(id);
+		state.answer.splice(index, 1);
 	}
 };
 

@@ -96,7 +96,7 @@
 </template>
 
 <script lang="ts">
-import { Answer, Like } from '@/interfaces';
+import { Answer, Like, User } from '@/interfaces';
 import { ActionTypes } from '@/store/actions';
 import { remove } from 'lodash-es';
 import Vue, { PropType } from 'vue';
@@ -111,7 +111,7 @@ export default Vue.extend({
 		};
 	},
 	computed: {
-		user(): any {
+		user(): User {
 			return this.$store.getters.getUser;
 		}
 	},
@@ -164,9 +164,17 @@ export default Vue.extend({
 		isMyAnswer(user_id: number) {
 			return user_id === this.user.id;
 		},
-		handleMyAnswer(menu: string, id: number) {
+		async handleMyAnswer(menu: string, id: number) {
 			if (menu === '수정') {
-				this.$router.push(`/write/${id}`);
+				await this.$router.push(`/write/${id}`);
+			}
+			if (menu === '삭제') {
+				const response = await this.$dialog.confirm({
+					text: '정말 삭제하실 건가요?'
+				});
+				if (response) {
+					this.$emit('deleteAnswer', id);
+				}
 			}
 		}
 	}

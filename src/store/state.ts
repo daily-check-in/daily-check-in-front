@@ -1,11 +1,11 @@
-import { User, Emotion } from '../interfaces';
+import { User, Emotion, Answer } from '../interfaces';
 
 const state = {
 	token: '',
 	user: {} as User,
 	page: 1,
 	limit: 10,
-	answer: [],
+	answer: ([] as unknown) as Answer,
 	emotion: ([] as unknown) as Emotion
 };
 

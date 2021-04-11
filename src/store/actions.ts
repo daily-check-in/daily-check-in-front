@@ -8,7 +8,8 @@ import {
 	fetchEmotion,
 	postAnswer,
 	fetchAnswer,
-	updateAnswer
+	updateAnswer,
+	deleteAnswer
 } from '../api/answer';
 
 export enum ActionTypes {
@@ -18,7 +19,8 @@ export enum ActionTypes {
 	FETCH_EMOTION = 'FETCH_EMOTION',
 	POST_ANSWER = 'POST_ANSWER',
 	FETCH_ANSWER = 'FETCH_ANSWER',
-	UPDATE_ANSWER = 'UPDATE_ANSWER'
+	UPDATE_ANSWER = 'UPDATE_ANSWER',
+	DELETE_ANSWER = 'DELETE_ANSWER'
 }
 
 type MyActionContext = {
@@ -62,6 +64,12 @@ export const actions = {
 		payload: { answer_id: number; emotion_id: number; content: string }
 	) {
 		return await updateAnswer(payload);
+	},
+	async [ActionTypes.DELETE_ANSWER](
+		context: MyActionContext,
+		payload: { answer_id: number }
+	) {
+		return await deleteAnswer(payload);
 	}
 };
 

@@ -52,6 +52,11 @@ function updateAnswer(data: {
 	return instance.patch(url, data);
 }
 
+function deleteAnswer(data: { answer_id: number }): AxiosPromise {
+	const url = `${api.answer}`;
+	return instance.delete(url, data);
+}
+
 export {
 	fetchAnswerItems,
 	postLike,
@@ -59,5 +64,6 @@ export {
 	fetchEmotion,
 	postAnswer,
 	fetchAnswer,
-	updateAnswer
+	updateAnswer,
+	deleteAnswer
 };
