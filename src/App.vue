@@ -34,12 +34,15 @@
 					</v-row>
 				</v-container>
 			</v-main>
+
+			<LoadingOverlay />
 		</v-app>
 	</div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import LoadingOverlay from './components/LoadingOverlay.vue';
 import Header from './layouts/Header.vue';
 
 export default Vue.extend({
@@ -48,7 +51,7 @@ export default Vue.extend({
 			return this.$vuetify.breakpoint.mobile ? 12 : 8;
 		}
 	},
-	components: { Header }
+	components: { Header, LoadingOverlay }
 });
 </script>
 

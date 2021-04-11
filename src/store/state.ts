@@ -6,7 +6,8 @@ const state = {
 	page: 1,
 	limit: 10,
 	answer: ([] as unknown) as Answer,
-	emotion: ([] as unknown) as Emotion
+	emotion: ([] as unknown) as Emotion,
+	isLoading: false
 };
 
 type RootState = typeof state;

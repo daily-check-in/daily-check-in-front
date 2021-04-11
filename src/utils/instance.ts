@@ -1,19 +1,25 @@
+import store from '@/store';
+import { MutationTypes } from '@/store/mutations';
 import { instance } from '../plugins/axios';
 
 instance.interceptors.request.use(
-	function(config) {
+	config => {
+		store.commit(MutationTypes.SET_LOADING, true);
 		return config;
 	},
-	function(error) {
+	error => {
+		store.commit(MutationTypes.SET_LOADING, false);
 		return Promise.reject(error);
 	}
 );
 
 instance.interceptors.response.use(
-	function(response) {
+	response => {
+		store.commit(MutationTypes.SET_LOADING, false);
 		return response.data;
 	},
-	function(error) {
+	error => {
+		store.commit(MutationTypes.SET_LOADING, false);
 		return Promise.reject(error);
 	}
 );

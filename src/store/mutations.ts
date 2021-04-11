@@ -10,6 +10,7 @@ export enum MutationTypes {
 	SET_LIMIT = 'SET_LIMIT',
 	SET_EMOTION = 'SET_EMOTION',
 	REMOVE_OBJECT_FROM_ARRAY = 'REMOVE_OBJECT_FROM_ARRAY'
+	SET_LOADING = 'SET_LOADING'
 }
 
 export const mutations = {
@@ -37,6 +38,9 @@ export const mutations = {
 			.map((item: { id: number }) => item.id)
 			.indexOf(id);
 		state.answer.splice(index, 1);
+	},
+	[MutationTypes.SET_LOADING](state: RootState, isLoading: boolean) {
+		state.isLoading = isLoading;
 	}
 };
 
