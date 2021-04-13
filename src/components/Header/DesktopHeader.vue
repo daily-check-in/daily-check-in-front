@@ -1,12 +1,8 @@
 <template>
 	<v-container class="py-0 fill-height">
-		<v-avatar class="mr-10" color="teal" size="32">
-			<span class="white--text">데체</span>
-		</v-avatar>
-
-		<v-btn v-for="link in links" :key="link.name" text>
-			<router-link :to="link.to">{{ link.name }}</router-link>
-		</v-btn>
+		<router-link to="/">
+			<img src="../../assets/images/twitter_header_photo_1.png" class="logo" />
+		</router-link>
 
 		<v-spacer />
 
@@ -26,12 +22,13 @@
 <script lang="ts">
 import Vue from 'vue';
 export default Vue.extend({
-	props: {
-		links: {
-			type: Array
-		}
-	}
+	name: 'DesktopHeader'
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.logo {
+	height: 42px;
+	cursor: pointer;
+}
+</style>

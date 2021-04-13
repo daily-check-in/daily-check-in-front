@@ -1,7 +1,7 @@
 <template>
 	<v-app-bar app :color="appBarColor" flat dense>
 		<MobileHeader v-if="this.$vuetify.breakpoint.mobile" />
-		<DesktopHeader v-else :links="links" />
+		<DesktopHeader v-else />
 	</v-app-bar>
 </template>
 
@@ -11,20 +11,7 @@ import MobileHeader from '@/components/Header/MobileHeader.vue';
 import Vue from 'vue';
 
 export default Vue.extend({
-	data() {
-		return {
-			links: [
-				{
-					name: 'Home',
-					to: '/'
-				},
-				{
-					name: 'About',
-					to: '/about'
-				}
-			]
-		};
-	},
+	name: 'Header',
 	computed: {
 		appBarColor() {
 			return this.$vuetify.breakpoint.mobile ? 'success' : 'white';
