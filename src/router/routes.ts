@@ -2,6 +2,12 @@ import { authGuard } from './authGuard';
 
 export default [
 	{
+		path: '*',
+		name: 'NotFound',
+		component: () =>
+			import(/* webpackChunkName: "notFound" */ '../views/NotFoundView.vue')
+	},
+	{
 		path: '/',
 		name: 'Home',
 		component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
