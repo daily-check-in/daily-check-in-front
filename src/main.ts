@@ -29,7 +29,7 @@ firebase.default.auth().onAuthStateChanged(async user => {
 		const { data } = await fetchUserInfo().then(response => {
 			return response;
 		});
-		console.log(data);
+		// console.log(data);
 		store.commit('SET_USER', data);
 	}
 

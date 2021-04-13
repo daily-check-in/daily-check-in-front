@@ -8,9 +8,17 @@
 					<v-col v-if="!this.$vuetify.breakpoint.mobile" cols="4">
 						<v-sheet rounded="lg">
 							<v-list color="transparent">
-								<v-list-item v-for="n in 5" :key="n" link>
+								<v-list-item>
+									<v-list-item-avatar color="white mr-2 mt-0">
+										<v-img :src="user.photoURL" alt />
+									</v-list-item-avatar>
 									<v-list-item-content>
-										<v-list-item-title> List Item {{ n }} </v-list-item-title>
+										<v-list-item-title class="font-weight-medium">
+											{{ user.display_name }}
+										</v-list-item-title>
+										<v-list-item-title class="grey--text">
+											{{ user.email }}
+										</v-list-item-title>
 									</v-list-item-content>
 								</v-list-item>
 
@@ -18,8 +26,8 @@
 
 								<v-list-item link color="grey lighten-4">
 									<v-list-item-content>
-										<v-list-item-title>
-											Refresh
+										<v-list-item-title @click="logout()">
+											로그아웃
 										</v-list-item-title>
 									</v-list-item-content>
 								</v-list-item>
@@ -38,7 +46,9 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import firebase from 'firebase';
 import Header from './Header.vue';
+import { User } from '../interfaces/index';
 
 export default Vue.extend({
 	name: 'DefaultLayout',
@@ -52,6 +62,15 @@ export default Vue.extend({
 		},
 		computedContainerCols() {
 			return this.$vuetify.breakpoint.mobile ? 12 : 8;
+		},
+		user(): User {
+			return this.$store.getters.getUser;
+		}
+	},
+	methods: {
+		logout() {
+			firebase.auth().signOut();
+			this.$router.push('/signin');
 		}
 	},
 	components: { Header }

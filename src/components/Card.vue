@@ -1,7 +1,7 @@
 <template>
 	<v-card>
 		<v-list-item class="grow pt-2">
-			<v-list-item-avatar color="grey darken-3 mr-2">
+			<v-list-item-avatar color="white mr-2">
 				<v-img alt :src="item.user.photoURL" />
 			</v-list-item-avatar>
 
