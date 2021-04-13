@@ -53,7 +53,10 @@
 				</div>
 			</v-alert>
 
-			<div class="py-2 card-content black--text" v-html="item.content" />
+			<div
+				class="ql-editor py-2 card-content black--text"
+				v-html="item.content"
+			/>
 
 			<div
 				v-show="hasReaction(item)"
@@ -337,7 +340,18 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+@import '../assets/styles/quill.init.scss';
+
 .v-card {
 	border-radius: 8px;
+}
+.card-content::v-deep {
+	p {
+		margin-bottom: 0 !important;
+
+		img {
+			max-width: 100%;
+		}
+	}
 }
 </style>

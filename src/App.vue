@@ -62,6 +62,4 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="scss">
-@import 'assets/styles/common.scss';
-</style>
+<style lang="scss"></style>
