@@ -25,6 +25,12 @@ export const getters = {
 	},
 	hasEmotion(state: RootState) {
 		return state.emotion.length > 0;
+	},
+	getReplyId(state: RootState) {
+		return state.replyId;
+	},
+	isModifyReply(state: RootState) {
+		return state.replyId !== null;
 	}
 };
 

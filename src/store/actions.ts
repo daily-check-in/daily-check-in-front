@@ -10,7 +10,9 @@ import {
 	fetchAnswer,
 	updateAnswer,
 	deleteAnswer,
-	postReply
+	postReply,
+	updateReply,
+	deleteReply
 } from '../api/answer';
 
 export enum ActionTypes {
@@ -22,7 +24,9 @@ export enum ActionTypes {
 	FETCH_ANSWER = 'FETCH_ANSWER',
 	UPDATE_ANSWER = 'UPDATE_ANSWER',
 	DELETE_ANSWER = 'DELETE_ANSWER',
-	POST_REPLY = 'POST_REPLY'
+	POST_REPLY = 'POST_REPLY',
+	UPDATE_REPLY = 'UPDATE_REPLY',
+	DELETE_REPLY = 'DELETE_REPLY'
 }
 
 type MyActionContext = {
@@ -78,6 +82,18 @@ export const actions = {
 		payload: { answer_id: number; content: string }
 	) {
 		return await postReply(payload);
+	},
+	async [ActionTypes.UPDATE_REPLY](
+		context: MyActionContext,
+		payload: { comment_id: number; content: string }
+	) {
+		return await updateReply(payload);
+	},
+	async [ActionTypes.DELETE_REPLY](
+		context: MyActionContext,
+		payload: { comment_id: number }
+	) {
+		return await deleteReply(payload);
 	}
 };
 

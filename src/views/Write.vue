@@ -151,7 +151,7 @@ export default writeMixin.extend({
 					});
 				// console.log(status);
 				if (status === 204) {
-					this.$router.go(-1);
+					location.href = '/';
 				}
 			} catch (e) {
 				console.log(e);
@@ -168,9 +168,9 @@ export default writeMixin.extend({
 					.then(response => {
 						return response;
 					});
-				// console.log(status);
+
 				if (status === 204) {
-					this.$router.go(-1);
+					location.href = '/';
 				}
 			} catch (e) {
 				console.log(e);

@@ -6,7 +6,7 @@
 			</v-list-item-avatar>
 
 			<v-list-item-content>
-				<v-list-item-title>
+				<v-list-item-title class="font-weight-medium">
 					{{ item.user.display_name || item.user.email.split('@')[0] }}
 				</v-list-item-title>
 				<v-list-item-subtitle class="grey--text">
@@ -16,7 +16,7 @@
 
 			<v-menu v-if="isMyContent(item.user.id)" bottom left>
 				<template v-slot:activator="{ on, attrs }">
-					<v-btn icon v-bind="attrs" v-on="on">
+					<v-btn icon small v-bind="attrs" class="mb-4" v-on="on">
 						<v-icon>mdi-dots-vertical</v-icon>
 					</v-btn>
 				</template>
@@ -133,7 +133,7 @@
 			<v-btn
 				icon
 				color="success"
-				:disabled="reply === ''"
+				:disabled="sync_reply === ''"
 				@click="handleReplySubmit()"
 			>
 				<v-icon>mdi-send</v-icon>
@@ -178,7 +178,7 @@
 										v-for="(menu, index) in privateMenu"
 										:key="`private-menu-${index}`"
 										class="py-0 px-2"
-										@click="handleMyAnswer(menu, item.id)"
+										@click="handleMyReply(menu, reply.id)"
 									>
 										<v-btn text>{{ menu }}</v-btn>
 									</v-list-item>
@@ -223,6 +223,9 @@ export default Vue.extend({
 			set(value) {
 				this.$emit('update:reply', value);
 			}
+		},
+		isModifyReply(): boolean {
+			return this.$store.getters.isModifyReply;
 		}
 	},
 	methods: {
@@ -292,11 +295,24 @@ export default Vue.extend({
 				await this.$router.push(`/write/${id}`);
 			}
 			if (menu === '삭제') {
-				const response = await this.$dialog.confirm({
+				const confirm = await this.$dialog.confirm({
 					text: '정말 삭제하실 건가요?'
 				});
-				if (response) {
+				if (confirm) {
 					this.$emit('deleteAnswer', id);
+				}
+			}
+		},
+		async handleMyReply(menu: string, id: number) {
+			if (menu === '수정') {
+				this.$emit('setReply', this.item.id, id);
+			}
+			if (menu === '삭제') {
+				const confirm = await this.$dialog.confirm({
+					text: '정말 삭제하실 건가요?'
+				});
+				if (confirm) {
+					this.$emit('deleteReply', this.item.id, id);
 				}
 			}
 		},
@@ -307,10 +323,11 @@ export default Vue.extend({
 			this.$refs[`textarea-${this.item.id}`].focus();
 		},
 		handleReplySubmit() {
-			this.postReply();
-		},
-		postReply() {
-			this.$emit('postReply', this.item.id, this.reply);
+			this.$emit(
+				`${this.isModifyReply ? 'updateReply' : 'postReply'}`,
+				this.item.id,
+				this.reply
+			);
 		},
 		updateInput(event: { target: { value: string } }) {
 			this.$emit('input', event.target.value);

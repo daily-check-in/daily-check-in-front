@@ -9,9 +9,11 @@ export enum MutationTypes {
 	SET_PAGE = 'SET_PAGE',
 	SET_LIMIT = 'SET_LIMIT',
 	SET_EMOTION = 'SET_EMOTION',
-	REMOVE_OBJECT_FROM_ARRAY = 'REMOVE_OBJECT_FROM_ARRAY',
+	REMOVE_OBJECT_FROM_ANSWER = 'REMOVE_OBJECT_FROM_ANSWER',
+	REMOVE_OBJECT_FROM_REPLY = 'REMOVE_OBJECT_FROM_REPLY',
 	SET_REPLY = 'SET_REPLY',
-	SET_LOADING = 'SET_LOADING'
+	SET_LOADING = 'SET_LOADING',
+	SET_REPLY_ID = 'SET_REPLY_ID'
 }
 
 export const mutations = {
@@ -34,17 +36,26 @@ export const mutations = {
 	[MutationTypes.SET_EMOTION](state: RootState, emotion: Emotion) {
 		state.emotion = emotion;
 	},
-	[MutationTypes.REMOVE_OBJECT_FROM_ARRAY](state: RootState, id: number) {
+	[MutationTypes.REMOVE_OBJECT_FROM_ANSWER](state: RootState, id: number) {
 		const index = state.answer
-			.map((item: { id: number }) => item.id)
+			.map((item: { id: number }): number => item.id)
 			.indexOf(id);
 		state.answer.splice(index, 1);
+	},
+	[MutationTypes.REMOVE_OBJECT_FROM_REPLY](
+		state: RootState,
+		answerIndex: number,
+		id: number
+	) {
+		const replyIndex = state.answer[answerIndex].comment
+			.map((item: { id: number }): number => item.id)
+			.indexOf(id);
+		state.answer[answerIndex].comment.splice(replyIndex, 1);
 	},
 	[MutationTypes.SET_REPLY](
 		state: RootState,
 		payload: { index: number; comment: object }
 	) {
-		console.log(payload.index);
 		state.answer[payload.index] = Object.assign(
 			{},
 			state.answer[payload.index],
@@ -53,6 +64,9 @@ export const mutations = {
 	},
 	[MutationTypes.SET_LOADING](state: RootState, isLoading: boolean) {
 		state.isLoading = isLoading;
+	},
+	[MutationTypes.SET_REPLY_ID](state: RootState, replyId: boolean) {
+		state.replyId = replyId;
 	}
 };
 

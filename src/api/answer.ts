@@ -22,8 +22,8 @@ function postLike(id: number): AxiosPromise {
 
 function deleteLike(id: number): AxiosPromise {
 	const url = `${api.like}`;
-	const params = { like_id: id };
-	return instance.delete(url, { params });
+	const data = { like_id: id };
+	return instance.delete(url, { data });
 }
 
 function fetchEmotion(): AxiosPromise {
@@ -55,12 +55,25 @@ function updateAnswer(data: {
 
 function deleteAnswer(data: { answer_id: number }): AxiosPromise {
 	const url = `${api.answer}`;
-	return instance.delete(url, data);
+	return instance.delete(url, { data });
 }
 
 function postReply(data: { answer_id: number; content: string }): AxiosPromise {
 	const url = `${api.reply}`;
 	return instance.post(url, data);
+}
+
+function updateReply(data: {
+	comment_id: number;
+	content: string;
+}): AxiosPromise {
+	const url = `${api.reply}`;
+	return instance.patch(url, data);
+}
+
+function deleteReply(data: { comment_id: number }): AxiosPromise {
+	const url = `${api.reply}`;
+	return instance.delete(url, { data });
 }
 
 export {
@@ -72,5 +85,7 @@ export {
 	fetchAnswer,
 	updateAnswer,
 	deleteAnswer,
-	postReply
+	postReply,
+	updateReply,
+	deleteReply
 };
