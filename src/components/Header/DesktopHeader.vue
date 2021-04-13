@@ -10,7 +10,7 @@
 
 		<v-spacer />
 
-		<v-responsive max-width="260">
+		<!-- <v-responsive max-width="260">
 			<v-text-field
 				prepend-inner-icon="mdi-magnify"
 				filled
@@ -19,7 +19,7 @@
 				hide-details
 				color="grey"
 			/>
-		</v-responsive>
+		</v-responsive> -->
 	</v-container>
 </template>
 
