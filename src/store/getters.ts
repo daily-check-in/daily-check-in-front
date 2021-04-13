@@ -1,4 +1,5 @@
 import { RootState } from './state';
+import { hasOwnProperty } from '../utils/hasOwnProperty';
 
 export const getters = {
 	getToken(state: RootState) {
@@ -7,8 +8,8 @@ export const getters = {
 	getUser: (state: RootState) => {
 		return state.user;
 	},
-	isUser(state: RootState) {
-		return Object.keys(state.user).length === 0;
+	isSignIn(state: RootState) {
+		return hasOwnProperty(state.user, 'id');
 	},
 	getAnswer(state: RootState) {
 		return state.answer;

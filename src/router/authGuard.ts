@@ -6,7 +6,7 @@ export const authGuard: Function = () => (
 	from: Route,
 	next: any
 ) => {
-	if (store.getters.getUser) {
+	if (store.getters.isSignIn) {
 		return next();
 	}
 	next('/signIn');

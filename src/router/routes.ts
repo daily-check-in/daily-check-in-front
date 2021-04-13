@@ -27,6 +27,7 @@ export default [
 			detail: true
 		},
 		component: () =>
-			import(/* webpackChunkName: "write" */ '../views/Write.vue')
+			import(/* webpackChunkName: "write" */ '../views/Write.vue'),
+		beforeEnter: authGuard()
 	}
 ];
