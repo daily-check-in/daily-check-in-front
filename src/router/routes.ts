@@ -33,7 +33,7 @@ export default [
 		path: '/signIn',
 		name: 'SignIn',
 		meta: {
-			layout: ''
+			layout: 'ErrorLayout'
 		},
 		component: () =>
 			import(/* webpackChunkName: "signIn" */ '../views/SignIn.vue')
