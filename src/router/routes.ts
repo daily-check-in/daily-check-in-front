@@ -30,7 +30,7 @@ export default [
 		beforeEnter: authGuard()
 	},
 	{
-		path: '/signIn',
+		path: '/signin',
 		name: 'SignIn',
 		meta: {
 			layout: 'ErrorLayout'

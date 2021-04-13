@@ -29,8 +29,12 @@ firebase.default.auth().onAuthStateChanged(async user => {
 		const { data } = await fetchUserInfo().then(response => {
 			return response;
 		});
-		// console.log(data);
 		store.commit('SET_USER', data);
+
+		const isSignIn = location.pathname.indexOf('signin') > -1;
+		if (isSignIn) {
+			location.href = '/';
+		}
 	}
 
 	new Vue({

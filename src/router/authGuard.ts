@@ -9,5 +9,5 @@ export const authGuard: Function = () => (
 	if (store.getters.isSignIn) {
 		return next();
 	}
-	next('/signIn');
+	next('/signin');
 };
