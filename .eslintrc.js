@@ -18,8 +18,8 @@ module.exports = {
 	rules: {
 		"no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
 		"no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
-    "@typescript-eslint/camelcase": "off",
-    "prettier/prettier": [
+		"@typescript-eslint/camelcase": "off",
+		"prettier/prettier": [
 			// https://prettier.io/docs/en/options.html
 			"error",
 			{

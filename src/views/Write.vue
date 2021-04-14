@@ -92,7 +92,6 @@ export default writeMixin.extend({
 					.then(response => {
 						return response;
 					});
-				// console.log(data);
 				if (status === 200) {
 					this.$store.commit(MutationTypes.SET_EMOTION, data);
 				}
@@ -117,7 +116,6 @@ export default writeMixin.extend({
 					.then(response => {
 						return response;
 					});
-				// console.log(data);
 				if (status === 200) {
 					const { content, emotion_id, id } = data;
 					this.content = content;
@@ -149,7 +147,6 @@ export default writeMixin.extend({
 					.then(response => {
 						return response;
 					});
-				// console.log(status);
 				if (status === 204) {
 					location.href = '/';
 				}

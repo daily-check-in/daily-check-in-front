@@ -10,6 +10,6 @@ export default new Vuetify({
 		mobileBreakpoint: 960
 	},
 	icons: {
-		iconfont: 'mdi' // default - only for display purposes
+		iconfont: 'mdi'
 	}
 });
