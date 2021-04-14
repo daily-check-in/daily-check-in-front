@@ -1,7 +1,16 @@
 <template>
 	<v-container class="py-0 fill-height">
-		<router-link to="/">
-			<img src="../../assets/images/twitter_header_photo_1.png" class="logo" />
+		<router-link
+			to="/"
+			class="logo-wrapper d-flex justify-center"
+			style="text-decoration: none"
+		>
+			<img
+				src="../../assets/images/logo/logo_comento_symbol.svg"
+				alt
+				class="logo mr-1"
+			/>
+			데일리 체크인
 		</router-link>
 
 		<v-spacer />
@@ -27,8 +36,12 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.logo {
-	height: 42px;
-	cursor: pointer;
+.logo-wrapper {
+	color: #00c853;
+	font-weight: bold;
+
+	.logo {
+		height: 18px;
+	}
 }
 </style>
