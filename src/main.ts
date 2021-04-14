@@ -4,9 +4,24 @@ import router from './router';
 import store from './store';
 import vuetify from './plugins/vuetify';
 import firebase from './plugins/firebase';
+import VueAnalytics from 'vue-analytics';
+import VueGtm from 'vue-gtm';
 import './plugins';
 import { fetchUserInfo } from './api/auth';
 Vue.config.productionTip = false;
+
+Vue.use(VueAnalytics, {
+	id: process.env.VUE_APP_ANALYTICS_ID,
+	router,
+	autoTracking: {
+		pageviewOnLoad: false
+	}
+});
+
+Vue.use(VueGtm, {
+	id: process.env.VUE_APP_GTM_ID,
+	vueRouter: router
+});
 
 // async fetchUserInfo() {
 // 	const response = await fetchUserInfo().then(({ data }) => {

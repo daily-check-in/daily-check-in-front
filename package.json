@@ -16,6 +16,8 @@
     "lodash-es": "^4.17.21",
     "sass": "^1.32.8",
     "vue": "^2.6.11",
+    "vue-analytics": "^5.22.1",
+    "vue-gtm": "3.5.0-vue2",
     "vue-infinite-loading": "^2.4.5",
     "vue-quill-editor": "^3.0.6",
     "vue-router": "^3.2.0",
