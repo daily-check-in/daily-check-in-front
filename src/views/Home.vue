@@ -163,6 +163,11 @@ export default Vue.extend({
 				}
 			} catch (e) {
 				console.log(e);
+				this.$dialog.notify.error('오류입니다. 다시 시도해주세요.', {
+					position: `${
+						this.$vuetify.breakpoint.mobile ? 'bottom' : 'top'
+					}-right`
+				});
 			} finally {
 				this.$forceUpdate();
 			}
@@ -189,6 +194,11 @@ export default Vue.extend({
 				}
 			} catch (e) {
 				console.log(e);
+				this.$dialog.notify.error('오류입니다. 다시 시도해주세요.', {
+					position: `${
+						this.$vuetify.breakpoint.mobile ? 'bottom' : 'top'
+					}-right`
+				});
 			} finally {
 				this.$forceUpdate();
 			}
@@ -233,6 +243,11 @@ export default Vue.extend({
 				}
 			} catch (e) {
 				console.log(e);
+				this.$dialog.notify.error('오류입니다. 다시 시도해주세요.', {
+					position: `${
+						this.$vuetify.breakpoint.mobile ? 'bottom' : 'top'
+					}-right`
+				});
 			} finally {
 				this.$forceUpdate();
 			}
