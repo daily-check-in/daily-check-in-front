@@ -20,16 +20,6 @@ export default [
 		beforeEnter: authGuard()
 	},
 	{
-		path: '/about',
-		name: 'About',
-		meta: {
-			layout: 'DefaultLayout'
-		},
-		component: () =>
-			import(/* webpackChunkName: "about" */ '../views/About.vue'),
-		beforeEnter: authGuard()
-	},
-	{
 		path: '/signin',
 		name: 'SignIn',
 		meta: {
