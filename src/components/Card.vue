@@ -1,18 +1,21 @@
 <template>
-	<v-card>
-		<v-list-item class="grow pt-2">
-			<v-list-item-avatar color="white mr-2">
-				<v-img alt :src="item.user.photoURL" />
-			</v-list-item-avatar>
-
-			<v-list-item-content>
-				<v-list-item-title class="font-weight-medium">
-					{{ item.user.display_name || item.user.email.split('@')[0] }}
-				</v-list-item-title>
-				<v-list-item-subtitle class="grey--text">
-					{{ item.created_at }}
-				</v-list-item-subtitle>
-			</v-list-item-content>
+	<v-card class="pt-3">
+		<v-list-item class="grow">
+			<v-list-item class="mb-2 px-0">
+				<Avatar
+					:photo-url="item.user.photoURL"
+					:display-name="item.user.display_name"
+					class="mr-2"
+				/>
+				<v-list-item-content class="pt-2 pb-1">
+					<v-list-item-title class="font-weight-medium">
+						{{ item.user.display_name || item.user.email.split('@')[0] }}
+					</v-list-item-title>
+					<v-list-item-subtitle class="grey--text">
+						{{ item.created_at }}
+					</v-list-item-subtitle>
+				</v-list-item-content>
+			</v-list-item>
 
 			<v-menu v-if="isMyContent(item.user.id)" bottom left>
 				<template v-slot:activator="{ on, attrs }">
@@ -148,9 +151,14 @@
 			<v-list class="py-0">
 				<template v-for="(reply, index) in item.comment">
 					<v-list-item :key="`reply-${index}`" class="px-0">
-						<v-list-item-avatar size="30" class="align-self-start mr-2">
+						<Avatar
+							:photo-url="reply.user.photoURL"
+							:display-name="reply.user.display_name"
+							class="mr-2"
+						/>
+						<!-- <v-list-item-avatar size="30" class="align-self-start mr-2">
 							<v-img :src="reply.user.photoURL" />
-						</v-list-item-avatar>
+						</v-list-item-avatar> -->
 
 						<v-list-item-content class="d-inline-block py-1">
 							<v-alert
@@ -200,6 +208,7 @@ import { Answer, Like, User } from '@/interfaces';
 import { ActionTypes } from '@/store/actions';
 import { remove } from 'lodash-es';
 import Vue, { PropType } from 'vue';
+import Avatar from './Avatar.vue';
 
 export default Vue.extend({
 	props: {
@@ -335,6 +344,9 @@ export default Vue.extend({
 		updateInput(event: { target: { value: string } }) {
 			this.$emit('input', event.target.value);
 		}
+	},
+	components: {
+		Avatar
 	}
 });
 </script>

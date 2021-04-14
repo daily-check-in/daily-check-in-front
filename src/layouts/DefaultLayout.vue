@@ -9,9 +9,11 @@
 						<v-sheet rounded="lg">
 							<v-list color="transparent">
 								<v-list-item>
-									<v-list-item-avatar color="white mr-2 mt-0">
-										<v-img :src="user.photoURL" alt />
-									</v-list-item-avatar>
+									<Avatar
+										:photo-url="user.photoURL"
+										:display-name="user.display_name"
+										class="mr-2"
+									/>
 									<v-list-item-content>
 										<v-list-item-title class="font-weight-medium">
 											{{ user.display_name }}
@@ -49,6 +51,7 @@ import Vue from 'vue';
 import firebase from 'firebase';
 import Header from './Header.vue';
 import { User } from '../interfaces/index';
+import Avatar from '@/components/Avatar.vue';
 
 export default Vue.extend({
 	name: 'DefaultLayout',
@@ -73,7 +76,7 @@ export default Vue.extend({
 			this.$router.push('/signin');
 		}
 	},
-	components: { Header }
+	components: { Header, Avatar }
 });
 </script>
 
