@@ -75,6 +75,13 @@ export default Vue.extend({
 			return `${userName}님${textItems[randomNumber]}`;
 		}
 	},
+	mounted() {
+		this.$gtm.trackEvent({
+			event: 'viewCheckInList',
+			user_uid: this.user.uid,
+			user_email: this.user.email
+		});
+	},
 	methods: {
 		init() {
 			this.$store.commit(MutationTypes.SET_PAGE, 1);

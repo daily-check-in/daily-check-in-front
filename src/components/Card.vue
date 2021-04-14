@@ -255,7 +255,13 @@ export default Vue.extend({
 		},
 		handleLike(item: Answer) {
 			if (item.is_like) {
-				console.log(item.like);
+				this.$gtm.trackEvent({
+					event: 'clickLike',
+					user_uid: this.user.uid,
+					user_email: this.user.email,
+					check_in_id: this.item.id
+				});
+
 				const myLike = item.like.find(
 					(likeItem: Record<string, any>) => likeItem.user_id === this.user.id
 				);

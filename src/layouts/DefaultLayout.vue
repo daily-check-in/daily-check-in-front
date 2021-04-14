@@ -72,6 +72,12 @@ export default Vue.extend({
 	},
 	methods: {
 		logout() {
+			this.$gtm.trackEvent({
+				event: 'clickLogout',
+				user_uid: this.user.uid,
+				user_email: this.user.email
+			});
+
 			firebase.auth().signOut();
 			this.$router.push('/signin');
 		}

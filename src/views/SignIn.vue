@@ -28,8 +28,19 @@ import firebase from 'firebase';
 
 export default Vue.extend({
 	name: 'SignIn',
+	mounted() {
+		this.$gtm.trackEvent({
+			event: 'viewLogin',
+			user_uid: 'none',
+			user_email: 'none'
+		});
+	},
 	methods: {
 		signInWithGoogle() {
+			this.$gtm.trackEvent({
+				event: 'clickLogin'
+			});
+
 			const provider = new firebase.auth.GoogleAuthProvider();
 			firebase.auth().languageCode = 'korean';
 			firebase.auth().signInWithRedirect(provider);
