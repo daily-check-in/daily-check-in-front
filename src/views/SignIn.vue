@@ -15,7 +15,7 @@
 					class="mt-4 float-right font-weight-bold"
 					@click="signInWithGoogle"
 				>
-					소통 시작하기 >
+					하루 공유하기 >
 				</v-btn>
 			</v-card>
 		</div>
