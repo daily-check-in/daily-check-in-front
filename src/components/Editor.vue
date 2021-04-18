@@ -46,10 +46,10 @@ export default Vue.extend({
 		},
 		sync_content: {
 			get(): string {
-				return this.content;
+				return (this as any).content;
 			},
 			set(val: string) {
-				this.$emit('update:content', val);
+				(this as any).$emit('update:content', val);
 			}
 		}
 	},

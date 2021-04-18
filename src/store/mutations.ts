@@ -1,6 +1,11 @@
 import { RootState } from './state';
 import { setAxiosToken } from '../plugins/axios';
-import { User, Emotion, Answer } from '../interfaces/index';
+import {
+	User,
+	EmotionResponse,
+	AnswerResponse,
+	AnswerInfo
+} from '../interfaces/index';
 
 export enum MutationTypes {
 	SET_TOKEN = 'SET_TOKEN',
@@ -24,7 +29,7 @@ export const mutations = {
 	[MutationTypes.SET_USER](state: RootState, user: User) {
 		state.user = user;
 	},
-	[MutationTypes.SET_ANSWER](state: RootState, answer: Answer) {
+	[MutationTypes.SET_ANSWER](state: RootState, answer: AnswerResponse) {
 		state.answer = answer;
 	},
 	[MutationTypes.SET_PAGE](state: RootState, page: number) {
@@ -33,24 +38,27 @@ export const mutations = {
 	[MutationTypes.SET_LIMIT](state: RootState, limit: number) {
 		state.limit = limit;
 	},
-	[MutationTypes.SET_EMOTION](state: RootState, emotion: Emotion) {
+	[MutationTypes.SET_EMOTION](state: RootState, emotion: EmotionResponse) {
 		state.emotion = emotion;
 	},
 	[MutationTypes.REMOVE_OBJECT_FROM_ANSWER](state: RootState, id: number) {
 		const index = state.answer
-			.map((item: { id: number }): number => item.id)
+			.map((item: { id: number }) => item.id)
 			.indexOf(id);
 		state.answer.splice(index, 1);
 	},
 	[MutationTypes.REMOVE_OBJECT_FROM_REPLY](
 		state: RootState,
-		answerIndex: number,
-		id: number
+		payload: { index: number; id: number }
 	) {
-		const replyIndex = state.answer[answerIndex].comment
-			.map((item: { id: number }): number => item.id)
-			.indexOf(id);
-		state.answer[answerIndex].comment.splice(replyIndex, 1);
+		const answerItem: AnswerInfo = state.answer[payload.index];
+		if (answerItem.comment instanceof Array) {
+			const replyIndex: number = answerItem.comment
+				.map((item: { id: number }) => item.id)
+				.indexOf(payload.id);
+
+			answerItem.comment.splice(replyIndex, 1);
+		}
 	},
 	[MutationTypes.SET_REPLY](
 		state: RootState,
@@ -65,7 +73,7 @@ export const mutations = {
 	[MutationTypes.SET_LOADING](state: RootState, isLoading: boolean) {
 		state.isLoading = isLoading;
 	},
-	[MutationTypes.SET_REPLY_ID](state: RootState, replyId: boolean) {
+	[MutationTypes.SET_REPLY_ID](state: RootState, replyId: number) {
 		state.replyId = replyId;
 	}
 };

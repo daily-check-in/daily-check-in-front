@@ -23,16 +23,7 @@ Vue.use(VueGtm, {
 	vueRouter: router
 });
 
-// async fetchUserInfo() {
-// 	const response = await fetchUserInfo().then(({ data }) => {
-// 		console.log(data);
-// 		return data;
-// 	});
-// 	// console.log(userInfo);
-// }
-
 firebase.default.auth().onAuthStateChanged(async user => {
-	// console.log(user);
 	if (user) {
 		await user.getIdToken().then((token: string) => {
 			store.commit('SET_TOKEN', token);

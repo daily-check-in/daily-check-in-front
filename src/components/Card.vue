@@ -204,7 +204,7 @@
 </template>
 
 <script lang="ts">
-import { Answer, Like, User } from '@/interfaces';
+import { AnswerInfo, LikeInfo, User } from '@/interfaces';
 import { ActionTypes } from '@/store/actions';
 import { remove } from 'lodash-es';
 import Vue, { PropType } from 'vue';
@@ -213,7 +213,7 @@ import Avatar from './Avatar.vue';
 export default Vue.extend({
 	props: {
 		item: {
-			type: Object as PropType<Answer>
+			type: Object as PropType<AnswerInfo>
 		},
 		reply: {
 			type: undefined
@@ -250,10 +250,10 @@ export default Vue.extend({
 		likeColor(is_like: boolean) {
 			return is_like ? 'error' : 'grey';
 		},
-		hasReaction(item: Answer) {
+		hasReaction(item: AnswerInfo) {
 			return item.like_count > 0 || item.comment_count > 0;
 		},
-		handleLike(item: Answer) {
+		handleLike(item: AnswerInfo) {
 			if (item.is_like) {
 				this.$gtm.trackEvent({
 					event: 'clickLike',
@@ -263,9 +263,11 @@ export default Vue.extend({
 				});
 
 				const myLike = item.like.find(
-					(likeItem: Record<string, any>) => likeItem.user_id === this.user.id
+					(likeItem: { user_id: number }) => likeItem.user_id === this.user.id
 				);
-				this.deleteLike(myLike);
+				if (myLike) {
+					this.deleteLike(myLike);
+				}
 			} else {
 				this.postLike(item.id);
 			}
@@ -290,7 +292,7 @@ export default Vue.extend({
 				console.log(e);
 			}
 		},
-		async deleteLike(item: Like) {
+		async deleteLike(item: LikeInfo) {
 			const { status } = await this.$store
 				.dispatch(ActionTypes.DELETE_LIKE, item.id)
 				.then(response => {
@@ -298,7 +300,7 @@ export default Vue.extend({
 				});
 
 			if (status === 204) {
-				remove(this.item.like, like => {
+				remove(this.item.like, (like: { id: number }) => {
 					return like.id === item.id;
 				});
 				this.item.like_count -= 1;
@@ -338,7 +340,10 @@ export default Vue.extend({
 			this.$emit('showReply', id);
 		},
 		setReplyFocus() {
-			this.$refs[`textarea-${this.item.id}`].focus();
+			const $textarea = this.$refs[
+				`textarea-${this.item.id}`
+			] as HTMLDivElement;
+			$textarea.focus();
 		},
 		handleReplySubmit() {
 			this.$emit(

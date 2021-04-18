@@ -273,11 +273,10 @@ export default Vue.extend({
 						.map((item: { id: number }): number => item.id)
 						.indexOf(answerId);
 
-					this.$store.commit(
-						MutationTypes.REMOVE_OBJECT_FROM_REPLY,
+					this.$store.commit(MutationTypes.REMOVE_OBJECT_FROM_REPLY, {
 						answerIndex,
 						id
-					);
+					});
 
 					this.answerItems[answerIndex].comment_count -= 1;
 					this.showReply(answerId);

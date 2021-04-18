@@ -41,7 +41,7 @@ import { ActionTypes } from '@/store/actions';
 import { MutationTypes } from '@/store/mutations';
 import eventBus from '../utils/bus';
 import writeMixin from '../mixins/writeMixin';
-import { Emotion } from '@/interfaces';
+import { EmotionResponse } from '@/interfaces';
 
 export default writeMixin.extend({
 	name: 'Write',
@@ -53,18 +53,18 @@ export default writeMixin.extend({
 		};
 	},
 	computed: {
-		emotion(): Emotion {
+		emotion(): EmotionResponse {
 			return this.$store.getters.getEmotion;
 		},
 		orderByRandomEmotion() {
-			return this.emotion.sort(() => {
+			return (this as any).emotion.sort(() => {
 				return Math.random() - Math.random();
 			});
 		},
 		placeholder() {
 			return '느낀 점과 배운 점, 팀에 공유하고 싶은 말이 있으면 알려주세요.';
 		},
-		isValid() {
+		isValid(): boolean {
 			return this.content === '';
 		},
 		hasEmotion() {
@@ -92,7 +92,6 @@ export default writeMixin.extend({
 					.then(response => {
 						return response;
 					});
-				// console.log(data);
 				if (status === 200) {
 					this.$store.commit(MutationTypes.SET_EMOTION, data);
 				}
@@ -117,7 +116,6 @@ export default writeMixin.extend({
 					.then(response => {
 						return response;
 					});
-				// console.log(data);
 				if (status === 200) {
 					const { content, emotion_id, id } = data;
 					this.content = content;
@@ -149,7 +147,6 @@ export default writeMixin.extend({
 					.then(response => {
 						return response;
 					});
-				// console.log(status);
 				if (status === 204) {
 					location.href = '/';
 				}
