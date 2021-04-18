@@ -1,4 +1,4 @@
-export interface Answer {
+export interface AnswerInfo {
 	comment_count: number;
 	content: string;
 	created_at: string;
@@ -6,12 +6,15 @@ export interface Answer {
 	emotion_id: number;
 	id: number;
 	is_like: boolean;
-	like: Like;
+	like: LikeResponse;
 	like_count: number;
 	updated_at: string;
 	user: User;
 	user_id: number;
+	comment?: CommentInfo;
 }
+
+export type AnswerResponse = AnswerInfo[];
 
 export interface User {
 	id: number;
@@ -23,15 +26,17 @@ export interface User {
 	updated_at?: string;
 }
 
-export interface Like {
-	answer_id: number;
-	created_at: string;
+export interface LikeInfo {
+	answer_id?: number;
+	created_at?: string;
 	id: number;
 	user_id: number;
-	user: User;
+	user?: User;
 }
 
-export interface Emotion {
+export type LikeResponse = LikeInfo[];
+
+export interface EmotionInfo {
 	answer: string;
 	comment: string;
 	created_at: string;
@@ -42,3 +47,17 @@ export interface Emotion {
 	updated_at: string;
 	value: number;
 }
+
+export type EmotionResponse = EmotionInfo[];
+
+interface CommentInfo {
+	answer_id: number;
+	content: string;
+	created_at: string;
+	id: number;
+	updated_at: string;
+	user: User;
+	user_id: number;
+}
+
+export type CommentResponse = CommentInfo[];

@@ -1,6 +1,6 @@
 import { AxiosPromise } from 'axios';
 import instance from '../utils/instance';
-import { Answer } from '../interfaces/index';
+import { AnswerResponse } from '../interfaces/index';
 
 const api = {
 	answer: '/answer',
@@ -9,7 +9,10 @@ const api = {
 	reply: '/comment'
 };
 
-function fetchAnswerItems(page: number, limit: number): AxiosPromise<Answer[]> {
+function fetchAnswerItems(
+	page: number,
+	limit: number
+): AxiosPromise<AnswerResponse[]> {
 	const url = `${api.answer}?page=${page}&limit=${limit}`;
 	return instance.get(url);
 }

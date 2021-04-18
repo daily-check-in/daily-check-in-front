@@ -1,14 +1,14 @@
-import { User, Emotion, Answer } from '../interfaces';
+import { User, AnswerResponse, EmotionResponse } from '../interfaces';
 
 const state = {
 	token: '',
 	user: {} as User,
 	page: 1,
 	limit: 10,
-	answer: ([] as unknown) as Answer,
-	emotion: ([] as unknown) as Emotion,
+	answer: [] as AnswerResponse,
+	emotion: [] as EmotionResponse,
 	isLoading: false,
-	replyId: null as any
+	replyId: null as number | null
 };
 
 type RootState = typeof state;

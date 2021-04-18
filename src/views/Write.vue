@@ -41,7 +41,7 @@ import { ActionTypes } from '@/store/actions';
 import { MutationTypes } from '@/store/mutations';
 import eventBus from '../utils/bus';
 import writeMixin from '../mixins/writeMixin';
-import { Emotion } from '@/interfaces';
+import { EmotionResponse } from '@/interfaces';
 
 export default writeMixin.extend({
 	name: 'Write',
@@ -53,7 +53,7 @@ export default writeMixin.extend({
 		};
 	},
 	computed: {
-		emotion(): Emotion {
+		emotion(): EmotionResponse {
 			return this.$store.getters.getEmotion;
 		},
 		orderByRandomEmotion() {
@@ -64,7 +64,7 @@ export default writeMixin.extend({
 		placeholder() {
 			return '느낀 점과 배운 점, 팀에 공유하고 싶은 말이 있으면 알려주세요.';
 		},
-		isValid() {
+		isValid(): boolean {
 			return this.content === '';
 		},
 		hasEmotion() {
