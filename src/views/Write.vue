@@ -57,7 +57,7 @@ export default writeMixin.extend({
 			return this.$store.getters.getEmotion;
 		},
 		orderByRandomEmotion() {
-			return this.emotion.sort(() => {
+			return (this as any).emotion.sort(() => {
 				return Math.random() - Math.random();
 			});
 		},
