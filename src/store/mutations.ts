@@ -49,9 +49,9 @@ export const mutations = {
 	},
 	[MutationTypes.REMOVE_OBJECT_FROM_REPLY](
 		state: RootState,
-		payload: { index: number; id: number }
+		payload: { answerIndex: number; id: number }
 	) {
-		const answerItem: AnswerInfo = state.answer[payload.index];
+		const answerItem: AnswerInfo = state.answer[payload.answerIndex];
 		if (answerItem.comment instanceof Array) {
 			const replyIndex: number = answerItem.comment
 				.map((item: { id: number }) => item.id)
