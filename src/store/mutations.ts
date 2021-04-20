@@ -1,7 +1,7 @@
 import { RootState } from './state';
 import { setAxiosToken } from '../plugins/axios';
 import {
-	User,
+	UserInfo,
 	EmotionResponse,
 	AnswerResponse,
 	AnswerInfo
@@ -26,7 +26,7 @@ export const mutations = {
 		state.token = token;
 		setAxiosToken(token);
 	},
-	[MutationTypes.SET_USER](state: RootState, user: User) {
+	[MutationTypes.SET_USER](state: RootState, user: UserInfo) {
 		state.user = user;
 	},
 	[MutationTypes.SET_ANSWER](state: RootState, answer: AnswerResponse) {

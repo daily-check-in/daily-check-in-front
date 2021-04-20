@@ -1,8 +1,8 @@
-import { User, AnswerResponse, EmotionResponse } from '../interfaces';
+import { UserInfo, AnswerResponse, EmotionResponse } from '../interfaces';
 
 const state = {
 	token: '',
-	user: {} as User,
+	user: {} as UserInfo,
 	page: 1,
 	limit: 10,
 	answer: [] as AnswerResponse,

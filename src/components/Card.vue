@@ -201,7 +201,7 @@
 </template>
 
 <script lang="ts">
-import { AnswerInfo, LikeInfo, User } from '@/interfaces';
+import { AnswerInfo, LikeInfo, UserInfo } from '@/interfaces';
 import { ActionTypes } from '@/store/actions';
 import { remove } from 'lodash-es';
 import Vue, { PropType } from 'vue';
@@ -223,7 +223,7 @@ export default Vue.extend({
 		};
 	},
 	computed: {
-		user(): User {
+		user(): UserInfo {
 			return this.$store.getters.getUser;
 		},
 		sync_reply: {
