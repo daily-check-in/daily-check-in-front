@@ -1,5 +1,5 @@
 import { RootState } from './state';
-import { hasOwnProperty } from '../utils/hasOwnProperty';
+import { hasOwnProperty } from '@/utils/hasOwnProperty';
 
 export const getters = {
 	getToken(state: RootState) {

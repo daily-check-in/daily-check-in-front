@@ -4,7 +4,7 @@
 		<template v-if="checkInKings.some(king => king === displayName)">
 			<img
 				class="icon-crown"
-				src="../assets/images/icon/icon_crown.svg"
+				src="@/assets/images/icon/icon_crown.svg"
 				alt=""
 			/>
 		</template>

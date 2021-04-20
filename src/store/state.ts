@@ -1,4 +1,4 @@
-import { UserInfo, AnswerResponse, EmotionResponse } from '../interfaces';
+import { UserInfo, AnswerResponse, EmotionResponse } from '@/interfaces';
 
 const state = {
 	token: '',

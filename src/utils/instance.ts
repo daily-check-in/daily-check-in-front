@@ -1,6 +1,6 @@
 import store from '@/store';
 import { MutationTypes } from '@/store/mutations';
-import { instance } from '../plugins/axios';
+import { instance } from '@/plugins/axios';
 
 instance.interceptors.request.use(
 	config => {

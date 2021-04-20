@@ -10,7 +10,7 @@
 import Vue from 'vue';
 import 'quill/dist/quill.core.css';
 import 'quill/dist/quill.snow.css';
-import '../assets/styles/quill.init.scss';
+import '@/assets/styles/quill.init.scss';
 import { quillEditor } from 'vue-quill-editor';
 
 export default Vue.extend({
@@ -45,11 +45,12 @@ export default Vue.extend({
 			return editorOption;
 		},
 		sync_content: {
+			cache: false,
 			get(): string {
-				return (this as any).content;
+				return this.content;
 			},
-			set(val: string) {
-				(this as any).$emit('update:content', val);
+			set(val: string): void {
+				this.$emit('update:content', val);
 			}
 		}
 	},

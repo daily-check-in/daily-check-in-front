@@ -15,8 +15,8 @@
 </template>
 
 <script lang="ts">
-import eventBus from '../../utils/bus';
-import writeMixin from '../../mixins/writeMixin';
+import eventBus from '@/utils/bus';
+import writeMixin from '@/mixins/writeMixin';
 
 export default writeMixin.extend({
 	computed: {},
