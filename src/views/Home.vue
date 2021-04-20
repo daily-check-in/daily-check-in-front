@@ -38,7 +38,7 @@ import Vue from 'vue';
 import Card from '@/components/Card.vue';
 import { ActionTypes } from '@/store/actions';
 import { MutationTypes } from '@/store/mutations';
-import { User } from '@/interfaces';
+import { AnswerResponse, UserInfo } from '@/interfaces';
 
 export default Vue.extend({
 	name: 'Home',
@@ -49,10 +49,10 @@ export default Vue.extend({
 		};
 	},
 	computed: {
-		user(): User {
+		user(): UserInfo {
 			return this.$store.getters.getUser;
 		},
-		answerItems(): any {
+		answerItems(): AnswerResponse {
 			return this.$store.getters.getAnswer;
 		},
 		limit(): number {
@@ -88,7 +88,7 @@ export default Vue.extend({
 			this.$store.commit(MutationTypes.SET_PAGE, 1);
 			this.infiniteId += 1;
 		},
-		infiniteHandler($state: {
+		async infiniteHandler($state: {
 			loaded: () => void;
 			complete: () => void;
 			error: () => void;
@@ -98,24 +98,26 @@ export default Vue.extend({
 					page: this.page,
 					limit: this.limit
 				};
-				this.$store
+				const { data } = await this.$store
 					.dispatch(ActionTypes.FETCH_ANSWER_ITEMS, payload)
-					.then(({ data }) => {
-						if (data.data.length > 0) {
-							this.$store.commit(MutationTypes.SET_PAGE, this.page + 1);
-							this.reply = [
-								...this.reply,
-								...Array.from({ length: data.data.length }, () => '')
-							];
-							this.$store.commit(MutationTypes.SET_ANSWER, [
-								...this.answerItems,
-								...data.data
-							]);
-							$state.loaded();
-						} else {
-							$state.complete();
-						}
+					.then(response => {
+						return response;
 					});
+
+				if (data.data.length > 0) {
+					this.$store.commit(MutationTypes.SET_PAGE, this.page + 1);
+					this.reply = [
+						...this.reply,
+						...Array.from({ length: data.data.length }, () => '')
+					];
+					this.$store.commit(MutationTypes.SET_ANSWER, [
+						...this.answerItems,
+						...data.data
+					]);
+					$state.loaded();
+				} else {
+					$state.complete();
+				}
 			} catch {
 				$state.error();
 			}
@@ -229,14 +231,17 @@ export default Vue.extend({
 				.map((item: { id: number }): number => item.id)
 				.indexOf(answerId);
 
-			const replyIndex = this.answerItems[answerIndex].comment
-				.map((item: { id: number }): number => item.id)
-				.indexOf(id);
+			const answerItem = this.answerItems[answerIndex];
+			const comment = answerItem.comment;
 
-			this.reply[answerIndex] = this.answerItems[answerIndex].comment[
-				replyIndex
-			].content;
-			this.$forceUpdate();
+			if (comment) {
+				const replyIndex = comment
+					.map((item: { id: number }) => item.id)
+					.indexOf(id);
+
+				this.reply[answerIndex] = comment[replyIndex].content;
+				this.$forceUpdate();
+			}
 		},
 		async updateReply(answerId: number) {
 			try {
