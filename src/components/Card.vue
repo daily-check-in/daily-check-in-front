@@ -369,6 +369,8 @@ export default Vue.extend({
 	border-radius: 8px;
 }
 .card-content::v-deep {
+	padding: 8px 0 !important;
+
 	p {
 		margin-bottom: 0 !important;
 
