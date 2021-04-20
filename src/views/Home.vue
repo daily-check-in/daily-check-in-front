@@ -61,7 +61,7 @@ export default Vue.extend({
 		page(): number {
 			return this.$store.getters.getPage;
 		},
-		replyId(): number {
+		replyId(): number | null {
 			return this.$store.getters.getReplyId;
 		},
 		randomTodayText(): string {
@@ -250,7 +250,7 @@ export default Vue.extend({
 					.indexOf(answerId);
 
 				const data = {
-					comment_id: this.replyId,
+					comment_id: this.replyId as number,
 					content: this.reply[answerIndex]
 				};
 

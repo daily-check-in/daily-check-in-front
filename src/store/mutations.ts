@@ -73,7 +73,7 @@ export const mutations = {
 	[MutationTypes.SET_LOADING](state: RootState, isLoading: boolean) {
 		state.isLoading = isLoading;
 	},
-	[MutationTypes.SET_REPLY_ID](state: RootState, replyId: number) {
+	[MutationTypes.SET_REPLY_ID](state: RootState, replyId: number | null) {
 		state.replyId = replyId;
 	}
 };

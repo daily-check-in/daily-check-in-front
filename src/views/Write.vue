@@ -42,9 +42,14 @@ import { MutationTypes } from '@/store/mutations';
 import eventBus from '../utils/bus';
 import writeMixin from '../mixins/writeMixin';
 import { EmotionResponse } from '@/interfaces';
+import Vue from 'vue';
+import { VueConstructor } from 'vue';
 
-export default writeMixin.extend({
+export default (Vue as VueConstructor<
+	Vue & InstanceType<typeof writeMixin>
+>).extend({
 	name: 'Write',
+	mixins: [writeMixin],
 	data() {
 		return {
 			content: '',
@@ -57,9 +62,11 @@ export default writeMixin.extend({
 			return this.$store.getters.getEmotion;
 		},
 		orderByRandomEmotion() {
-			return (this as any).emotion.sort(() => {
+			const emotion: EmotionResponse = this.emotion;
+			const orderByRandomEmotion = emotion.sort(() => {
 				return Math.random() - Math.random();
 			});
+			return orderByRandomEmotion;
 		},
 		placeholder() {
 			return '느낀 점과 배운 점, 팀에 공유하고 싶은 말이 있으면 알려주세요.';
@@ -110,7 +117,7 @@ export default writeMixin.extend({
 		},
 		async fetchAnswer() {
 			try {
-				const params = { answer_id: this.$route.params.id };
+				const params = { answer_id: parseInt(this.$route.params.id) };
 				const { data, status } = await this.$store
 					.dispatch(ActionTypes.FETCH_ANSWER, params)
 					.then(response => {
@@ -138,7 +145,7 @@ export default writeMixin.extend({
 		async updateAnswer() {
 			try {
 				const data = {
-					answer_id: this.answerId,
+					answer_id: (this.answerId as unknown) as number,
 					emotion_id: this.orderByRandomEmotion[this.emotionItem].id,
 					content: this.content
 				};

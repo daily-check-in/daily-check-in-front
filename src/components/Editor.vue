@@ -45,11 +45,12 @@ export default Vue.extend({
 			return editorOption;
 		},
 		sync_content: {
+			cache: false,
 			get(): string {
-				return (this as any).content;
+				return this.content;
 			},
-			set(val: string) {
-				(this as any).$emit('update:content', val);
+			set(val: string): void {
+				this.$emit('update:content', val);
 			}
 		}
 	},

@@ -4,7 +4,7 @@ import store from '../store';
 export const authGuard: Function = () => (
 	to: Route,
 	from: Route,
-	next: any
+	next: Function
 ) => {
 	if (store.getters.isSignIn) {
 		return next();
