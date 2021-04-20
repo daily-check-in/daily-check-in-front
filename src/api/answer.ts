@@ -1,6 +1,6 @@
 import { AxiosPromise, AxiosResponse } from 'axios';
-import instance from '../utils/instance';
-import { AnswerInfo, EmotionInfo } from '../interfaces/index';
+import instance from '@/utils/instance';
+import { AnswerInfo, EmotionInfo } from '@/interfaces/index';
 
 const api = {
 	answer: '/answer',

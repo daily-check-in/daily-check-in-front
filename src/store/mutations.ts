@@ -1,11 +1,11 @@
 import { RootState } from './state';
-import { setAxiosToken } from '../plugins/axios';
+import { setAxiosToken } from '@/plugins/axios';
 import {
 	UserInfo,
 	EmotionResponse,
 	AnswerResponse,
 	AnswerInfo
-} from '../interfaces/index';
+} from '@/interfaces/index';
 
 export enum MutationTypes {
 	SET_TOKEN = 'SET_TOKEN',

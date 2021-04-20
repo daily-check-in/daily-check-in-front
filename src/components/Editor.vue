@@ -10,7 +10,7 @@
 import Vue from 'vue';
 import 'quill/dist/quill.core.css';
 import 'quill/dist/quill.snow.css';
-import '../assets/styles/quill.init.scss';
+import '@/assets/styles/quill.init.scss';
 import { quillEditor } from 'vue-quill-editor';
 
 export default Vue.extend({

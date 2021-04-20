@@ -39,8 +39,8 @@
 import Editor from '@/components/Editor.vue';
 import { ActionTypes } from '@/store/actions';
 import { MutationTypes } from '@/store/mutations';
-import eventBus from '../utils/bus';
-import writeMixin from '../mixins/writeMixin';
+import eventBus from '@/utils/bus';
+import writeMixin from '@/mixins/writeMixin';
 import { EmotionResponse } from '@/interfaces';
 import Vue from 'vue';
 import { VueConstructor } from 'vue';

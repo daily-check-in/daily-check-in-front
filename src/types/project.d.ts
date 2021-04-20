@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { MyStore } from '../store/types';
+import { MyStore } from '@/store/types';
 
 // NOTE: /node_modules/vuex/types/vue.d.ts 파일을 삭제해야 아래 타입이 정상 추론됨
 declare module 'vue/types/vue' {

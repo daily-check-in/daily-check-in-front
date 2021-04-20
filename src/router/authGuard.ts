@@ -1,5 +1,5 @@
 import { Route } from 'vue-router';
-import store from '../store';
+import store from '@/store';
 
 export const authGuard: Function = () => (
 	to: Route,

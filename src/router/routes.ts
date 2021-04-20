@@ -8,7 +8,7 @@ export default [
 			layout: 'ErrorLayout'
 		},
 		component: () =>
-			import(/* webpackChunkName: "notFound" */ '../views/NotFoundView.vue')
+			import(/* webpackChunkName: "notFound" */ '@/views/NotFoundView.vue')
 	},
 	{
 		path: '/',
@@ -16,7 +16,7 @@ export default [
 		meta: {
 			layout: 'DefaultLayout'
 		},
-		component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
+		component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
 		beforeEnter: authGuard()
 	},
 	{
@@ -26,7 +26,7 @@ export default [
 			layout: 'ErrorLayout'
 		},
 		component: () =>
-			import(/* webpackChunkName: "signIn" */ '../views/SignIn.vue')
+			import(/* webpackChunkName: "signIn" */ '@/views/SignIn.vue')
 	},
 	{
 		path: '/write/:id?',
@@ -36,7 +36,7 @@ export default [
 			detail: true
 		},
 		component: () =>
-			import(/* webpackChunkName: "write" */ '../views/Write.vue'),
+			import(/* webpackChunkName: "write" */ '@/views/Write.vue'),
 		beforeEnter: authGuard()
 	}
 ];

@@ -50,7 +50,7 @@
 import Vue from 'vue';
 import firebase from 'firebase';
 import Header from './Header.vue';
-import { UserInfo } from '../interfaces/index';
+import { UserInfo } from '@/interfaces/index';
 import Avatar from '@/components/Avatar.vue';
 
 export default Vue.extend({

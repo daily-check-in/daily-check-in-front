@@ -6,7 +6,7 @@
 			style="text-decoration: none"
 		>
 			<img
-				src="../../assets/images/logo/logo_comento_symbol.svg"
+				src="@/assets/images/logo/logo_comento_symbol.svg"
 				alt
 				class="logo mr-1"
 			/>
