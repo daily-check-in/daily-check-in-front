@@ -156,15 +156,16 @@
 							:display-name="reply.user.display_name"
 							class="mr-2"
 						/>
-						<!-- <v-list-item-avatar size="30" class="align-self-start mr-2">
-							<v-img :src="reply.user.photoURL" />
-						</v-list-item-avatar> -->
 
 						<v-list-item-content class="d-inline-block py-1">
 							<v-alert
-								class="pa-2 px-4 mb-0 mr-1 d-inline-block"
+								class="pa-2 px-4 mb-0 d-inline-block"
 								color="grey lighten-4 rounded-xl"
-								style="max-width: calc(100% - 26px)"
+								:style="
+									isMyContent(reply.user_id)
+										? 'max-width: calc(100% - 26px)'
+										: 'max-width: calc(100% - 10px)'
+								"
 							>
 								<div class="text-caption">
 									<span class="font-weight-bold">
@@ -179,7 +180,7 @@
 
 							<v-menu v-if="isMyContent(reply.user_id)" bottom left>
 								<template v-slot:activator="{ on, attrs }">
-									<v-btn icon x-small v-bind="attrs" v-on="on">
+									<v-btn icon x-small v-bind="attrs" class="ml-1" v-on="on">
 										<v-icon>mdi-dots-vertical</v-icon>
 									</v-btn>
 								</template>
