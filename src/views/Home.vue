@@ -22,6 +22,7 @@
 				class="mb-6"
 				@deleteAnswer="deleteAnswer(...arguments)"
 				@showReply="showReply(...arguments)"
+				@hideReply="hideReply(...arguments)"
 				@postReply="postReply(...arguments)"
 				@setReply="setReply(...arguments)"
 				@updateReply="updateReply(...arguments)"
@@ -147,6 +148,17 @@ export default Vue.extend({
 					}-right`
 				});
 			}
+		},
+		hideReply(id: number) {
+			const index = this.answerItems.findIndex(
+				(item: { id: number }) => item.id === id
+			);
+			const payload = {
+				index,
+				comment: []
+			};
+			this.$store.commit(MutationTypes.SET_REPLY, payload);
+			this.$forceUpdate();
 		},
 		async showReply(id: number) {
 			try {

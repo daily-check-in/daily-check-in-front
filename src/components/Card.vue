@@ -79,7 +79,7 @@
 					text
 					small
 					class="px-1 grey--text"
-					@click="showReply(item.id)"
+					@click="handleReply(item.id)"
 				>
 					댓글
 					{{ item.comment_count }}개
@@ -335,6 +335,19 @@ export default Vue.extend({
 					this.$emit('deleteReply', this.item.id, id);
 				}
 			}
+		},
+		handleReply(id: number) {
+			const hasComment =
+				this.item.comment instanceof Array && this.item.comment.length > 0;
+
+			if (hasComment) {
+				this.hideReply(id);
+			} else {
+				this.showReply(id);
+			}
+		},
+		hideReply(id: number) {
+			this.$emit('hideReply', id);
 		},
 		showReply(id: number) {
 			this.$emit('showReply', id);
