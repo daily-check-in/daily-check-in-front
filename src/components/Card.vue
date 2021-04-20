@@ -217,7 +217,8 @@ export default Vue.extend({
 			type: Object as PropType<AnswerInfo>
 		},
 		reply: {
-			type: undefined
+			type: String,
+			default: ''
 		}
 	},
 	data() {
