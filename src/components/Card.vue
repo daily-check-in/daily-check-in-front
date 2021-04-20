@@ -288,6 +288,7 @@ export default Vue.extend({
 					});
 					this.item.like_count += 1;
 					this.item.is_like = true;
+					this.$forceUpdate();
 				}
 			} catch (e) {
 				console.log(e);
@@ -306,6 +307,7 @@ export default Vue.extend({
 				});
 				this.item.like_count -= 1;
 				this.item.is_like = false;
+				this.$forceUpdate();
 			}
 		},
 		isMyContent(user_id: number) {
