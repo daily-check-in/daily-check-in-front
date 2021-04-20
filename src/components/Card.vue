@@ -154,18 +154,14 @@
 						<Avatar
 							:photo-url="reply.user.photoURL"
 							:display-name="reply.user.display_name"
-							class="mr-2"
+							class="mr-2 align-self-start mt-2"
 						/>
 
 						<v-list-item-content class="d-inline-block py-1">
 							<v-alert
 								class="pa-2 px-4 mb-0 d-inline-block"
 								color="grey lighten-4 rounded-xl"
-								:style="
-									isMyContent(reply.user_id)
-										? 'max-width: calc(100% - 26px)'
-										: 'max-width: calc(100% - 10px)'
-								"
+								:style="commentStyle(reply.user_id)"
 							>
 								<div class="text-caption">
 									<span class="font-weight-bold">
@@ -358,6 +354,11 @@ export default Vue.extend({
 		},
 		updateInput(event: { target: { value: string } }) {
 			this.$emit('input', event.target.value);
+		},
+		commentStyle(user_id: number) {
+			return `max-width: calc(100% - ${
+				this.isMyContent(user_id) ? '26px' : '10px'
+			})`;
 		}
 	},
 	components: {
