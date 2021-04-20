@@ -79,7 +79,7 @@ export default Vue.extend({
 			});
 
 			firebase.auth().signOut();
-			this.$router.push('/signin');
+			this.$router.replace('/signin');
 		}
 	},
 	components: { Header, Avatar }
