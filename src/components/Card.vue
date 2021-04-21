@@ -12,14 +12,17 @@
 						{{ item.user.display_name || item.user.email.split('@')[0] }}
 					</v-list-item-title>
 					<v-list-item-subtitle class="grey--text">
-						<v-tooltip bottom>
-							<template v-slot:activator="{ on, attrs }">
-								<span class="grey--text" v-bind="attrs" v-on="on">
-									{{ displayedAt(item.updated_at) }}
-								</span>
-							</template>
-							<span>{{ item.updated_at }}</span>
-						</v-tooltip>
+						<template v-if="displayedAt(item.created_at).includes('전')">
+							<v-tooltip bottom>
+								<template v-slot:activator="{ on, attrs }">
+									<span class="grey--text" v-bind="attrs" v-on="on">
+										{{ displayedAt(item.created_at) }}
+									</span>
+								</template>
+								<span>{{ item.created_at }}</span>
+							</v-tooltip>
+						</template>
+						<span v-else class="grey--text">{{ item.created_at }}</span>
 					</v-list-item-subtitle>
 				</v-list-item-content>
 			</v-list-item>
@@ -185,14 +188,17 @@
 											reply.user.display_name || reply.user.email.split('@')[0]
 										}}
 									</span>
-									<v-tooltip bottom>
-										<template v-slot:activator="{ on, attrs }">
-											<span class="grey--text" v-bind="attrs" v-on="on">
-												{{ displayedAt(reply.updated_at) }}
-											</span>
-										</template>
-										<span>{{ reply.updated_at }}</span>
-									</v-tooltip>
+									<template v-if="displayedAt(reply.created_at).includes('전')">
+										<v-tooltip bottom>
+											<template v-slot:activator="{ on, attrs }">
+												<span class="grey--text" v-bind="attrs" v-on="on">
+													{{ displayedAt(reply.created_at) }}
+												</span>
+											</template>
+											<span>{{ reply.created_at }}</span>
+										</v-tooltip>
+									</template>
+									<span v-else class="grey--text">{{ reply.created_at }}</span>
 								</div>
 								<div class="text-body-2" v-html="reply.content" />
 							</v-alert>
