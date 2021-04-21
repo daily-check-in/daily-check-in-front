@@ -40,8 +40,17 @@
 		<v-card-text class="py-2">
 			<v-alert class="mb-3 pa-2 pt-1 pb-0 d-inline-flex" color="grey lighten-3">
 				<div class="d-flex flex-row align-center">
-					<div class="headline mr-2">
-						{{ item.emotion.emoji }}
+					<div class="headline mr-2 d-flex align-center">
+						<img
+							:src="
+								require('@/assets/images/emoji/' +
+									animationEmotion[item.emotion.id - 1] +
+									'.gif')
+							"
+							style="width: 30px;"
+							class="pb-1"
+							alt
+						/>
 					</div>
 					<div
 						class="black--text subtitle-2"
@@ -236,6 +245,19 @@ export default Vue.extend({
 		},
 		isModifyReply(): boolean {
 			return this.$store.getters.isModifyReply;
+		},
+		animationEmotion() {
+			return [
+				'face_vomiting',
+				'face_screaming_in_fear',
+				'smiling_face_with_sunglasses',
+				'star_struck',
+				'exploding_head',
+				'cold_face',
+				'partying_face',
+				'upside_down_face',
+				'smiling_face_with_hearts'
+			];
 		}
 	},
 	methods: {
