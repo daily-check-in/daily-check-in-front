@@ -12,7 +12,14 @@
 						{{ item.user.display_name || item.user.email.split('@')[0] }}
 					</v-list-item-title>
 					<v-list-item-subtitle class="grey--text">
-						{{ item.created_at }}
+						<v-tooltip bottom>
+							<template v-slot:activator="{ on, attrs }">
+								<span class="grey--text" v-bind="attrs" v-on="on">
+									{{ displayedAt(item.updated_at) }}
+								</span>
+							</template>
+							<span>{{ item.updated_at }}</span>
+						</v-tooltip>
 					</v-list-item-subtitle>
 				</v-list-item-content>
 			</v-list-item>
@@ -178,7 +185,14 @@
 											reply.user.display_name || reply.user.email.split('@')[0]
 										}}
 									</span>
-									<span class="grey--text">{{ reply.created_at }}</span>
+									<v-tooltip bottom>
+										<template v-slot:activator="{ on, attrs }">
+											<span class="grey--text" v-bind="attrs" v-on="on">
+												{{ displayedAt(reply.updated_at) }}
+											</span>
+										</template>
+										<span>{{ reply.updated_at }}</span>
+									</v-tooltip>
 								</div>
 								<div class="text-body-2" v-html="reply.content" />
 							</v-alert>
@@ -215,6 +229,7 @@ import { ActionTypes } from '@/store/actions';
 import { remove } from 'lodash-es';
 import Vue, { PropType } from 'vue';
 import Avatar from './Avatar.vue';
+import { displayedAt } from '@/utils/displayedAt';
 
 export default Vue.extend({
 	props: {
@@ -261,6 +276,7 @@ export default Vue.extend({
 		}
 	},
 	methods: {
+		displayedAt,
 		goDetail(id: number) {
 			console.log(id);
 		},
