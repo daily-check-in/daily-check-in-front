@@ -12,7 +12,14 @@
 						{{ item.user.display_name || item.user.email.split('@')[0] }}
 					</v-list-item-title>
 					<v-list-item-subtitle class="grey--text">
-						{{ item.created_at }}
+						<v-tooltip bottom>
+							<template v-slot:activator="{ on, attrs }">
+								<span class="grey--text" v-bind="attrs" v-on="on">
+									{{ displayedAt(item.updated_at) }}
+								</span>
+							</template>
+							<span>{{ item.updated_at }}</span>
+						</v-tooltip>
 					</v-list-item-subtitle>
 				</v-list-item-content>
 			</v-list-item>
@@ -40,8 +47,17 @@
 		<v-card-text class="py-2">
 			<v-alert class="mb-3 pa-2 pt-1 pb-0 d-inline-flex" color="grey lighten-3">
 				<div class="d-flex flex-row align-center">
-					<div class="headline mr-2">
-						{{ item.emotion.emoji }}
+					<div class="headline mr-2 d-flex align-center">
+						<img
+							:src="
+								require('@/assets/images/emoji/' +
+									animationEmotion[item.emotion.id - 1] +
+									'.gif')
+							"
+							style="width: 30px;"
+							class="pb-1"
+							alt
+						/>
 					</div>
 					<div
 						class="black--text subtitle-2"
@@ -169,7 +185,14 @@
 											reply.user.display_name || reply.user.email.split('@')[0]
 										}}
 									</span>
-									<span class="grey--text">{{ reply.created_at }}</span>
+									<v-tooltip bottom>
+										<template v-slot:activator="{ on, attrs }">
+											<span class="grey--text" v-bind="attrs" v-on="on">
+												{{ displayedAt(reply.updated_at) }}
+											</span>
+										</template>
+										<span>{{ reply.updated_at }}</span>
+									</v-tooltip>
 								</div>
 								<div class="text-body-2" v-html="reply.content" />
 							</v-alert>
@@ -206,6 +229,7 @@ import { ActionTypes } from '@/store/actions';
 import { remove } from 'lodash-es';
 import Vue, { PropType } from 'vue';
 import Avatar from './Avatar.vue';
+import { displayedAt } from '@/utils/displayedAt';
 
 export default Vue.extend({
 	props: {
@@ -236,9 +260,23 @@ export default Vue.extend({
 		},
 		isModifyReply(): boolean {
 			return this.$store.getters.isModifyReply;
+		},
+		animationEmotion() {
+			return [
+				'face_vomiting',
+				'face_screaming_in_fear',
+				'smiling_face_with_sunglasses',
+				'star_struck',
+				'exploding_head',
+				'cold_face',
+				'partying_face',
+				'upside_down_face',
+				'smiling_face_with_hearts'
+			];
 		}
 	},
 	methods: {
+		displayedAt,
 		goDetail(id: number) {
 			console.log(id);
 		},
