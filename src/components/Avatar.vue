@@ -1,12 +1,7 @@
 <template>
 	<div class="avatar-wrapper">
-		<!-- :class="{ 'align-self-start': space === 'comment' }" -->
 		<template v-if="checkInKings.some(king => king === displayName)">
-			<img
-				class="icon-crown"
-				src="@/assets/images/icon/icon_crown.svg"
-				alt=""
-			/>
+			<img src="@/assets/images/icon/crown.gif" class="dc-king-crown" alt />
 		</template>
 		<v-list-item-avatar color="white" class="ma-0">
 			<v-img alt :src="photoUrl" />
@@ -37,13 +32,13 @@ export default Vue.extend({
 .avatar-wrapper {
 	position: relative;
 
-	.icon-crown {
+	.dc-king-crown {
 		position: absolute;
-		width: 20px;
+		width: 28px;
 		z-index: 1;
 		transform: rotate(-50deg);
-		left: -11px;
-		top: -9px;
+		left: -12px;
+		top: -10px;
 	}
 }
 </style>
