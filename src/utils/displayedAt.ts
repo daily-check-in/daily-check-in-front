@@ -14,6 +14,8 @@ const displayedAt = (date = '') => {
 	const months = days / 30;
 	if (months < 12) return `${Math.floor(months)}개월 전`;
 	const years = days / 365;
-	return `${Math.floor(years)}년 전`;
+	if (!isNaN(years)) `${Math.floor(years)}년 전`;
+
+	return date;
 };
 export { displayedAt };
