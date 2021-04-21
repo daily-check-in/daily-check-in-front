@@ -79,7 +79,7 @@
 					text
 					small
 					class="px-1 grey--text"
-					@click="showReply(item.id)"
+					@click="handleReply(item.id)"
 				>
 					댓글
 					{{ item.comment_count }}개
@@ -154,17 +154,14 @@
 						<Avatar
 							:photo-url="reply.user.photoURL"
 							:display-name="reply.user.display_name"
-							class="mr-2"
+							class="mr-2 align-self-start mt-2"
 						/>
-						<!-- <v-list-item-avatar size="30" class="align-self-start mr-2">
-							<v-img :src="reply.user.photoURL" />
-						</v-list-item-avatar> -->
 
 						<v-list-item-content class="d-inline-block py-1">
 							<v-alert
-								class="pa-2 px-4 mb-0 mr-1 d-inline-block"
+								class="pa-2 px-4 mb-0 d-inline-block"
 								color="grey lighten-4 rounded-xl"
-								style="max-width: calc(100% - 26px)"
+								:style="commentStyle(reply.user_id)"
 							>
 								<div class="text-caption">
 									<span class="font-weight-bold">
@@ -179,7 +176,7 @@
 
 							<v-menu v-if="isMyContent(reply.user_id)" bottom left>
 								<template v-slot:activator="{ on, attrs }">
-									<v-btn icon x-small v-bind="attrs" v-on="on">
+									<v-btn icon x-small v-bind="attrs" class="ml-1" v-on="on">
 										<v-icon>mdi-dots-vertical</v-icon>
 									</v-btn>
 								</template>
@@ -204,7 +201,7 @@
 </template>
 
 <script lang="ts">
-import { AnswerInfo, LikeInfo, User } from '@/interfaces';
+import { AnswerInfo, LikeInfo, UserInfo } from '@/interfaces';
 import { ActionTypes } from '@/store/actions';
 import { remove } from 'lodash-es';
 import Vue, { PropType } from 'vue';
@@ -216,7 +213,8 @@ export default Vue.extend({
 			type: Object as PropType<AnswerInfo>
 		},
 		reply: {
-			type: undefined
+			type: String,
+			default: ''
 		}
 	},
 	data() {
@@ -225,7 +223,7 @@ export default Vue.extend({
 		};
 	},
 	computed: {
-		user(): User {
+		user(): UserInfo {
 			return this.$store.getters.getUser;
 		},
 		sync_reply: {
@@ -287,6 +285,7 @@ export default Vue.extend({
 					});
 					this.item.like_count += 1;
 					this.item.is_like = true;
+					this.$forceUpdate();
 				}
 			} catch (e) {
 				console.log(e);
@@ -305,6 +304,7 @@ export default Vue.extend({
 				});
 				this.item.like_count -= 1;
 				this.item.is_like = false;
+				this.$forceUpdate();
 			}
 		},
 		isMyContent(user_id: number) {
@@ -336,6 +336,19 @@ export default Vue.extend({
 				}
 			}
 		},
+		handleReply(id: number) {
+			const hasComment =
+				this.item.comment instanceof Array && this.item.comment.length > 0;
+
+			if (hasComment) {
+				this.hideReply(id);
+			} else {
+				this.showReply(id);
+			}
+		},
+		hideReply(id: number) {
+			this.$emit('hideReply', id);
+		},
 		showReply(id: number) {
 			this.$emit('showReply', id);
 		},
@@ -354,6 +367,11 @@ export default Vue.extend({
 		},
 		updateInput(event: { target: { value: string } }) {
 			this.$emit('input', event.target.value);
+		},
+		commentStyle(user_id: number) {
+			return `max-width: calc(100% - ${
+				this.isMyContent(user_id) ? '26px' : '10px'
+			})`;
 		}
 	},
 	components: {
@@ -369,6 +387,8 @@ export default Vue.extend({
 	border-radius: 8px;
 }
 .card-content::v-deep {
+	padding: 8px 0 !important;
+
 	p {
 		margin-bottom: 0 !important;
 

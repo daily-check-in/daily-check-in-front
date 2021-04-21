@@ -13,7 +13,7 @@ import {
 	postReply,
 	updateReply,
 	deleteReply
-} from '../api/answer';
+} from '@/api/answer';
 
 export enum ActionTypes {
 	FETCH_ANSWER_ITEMS = 'FETCH_ANSWER_ITEMS',

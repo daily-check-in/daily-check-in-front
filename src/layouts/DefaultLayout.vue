@@ -50,7 +50,7 @@
 import Vue from 'vue';
 import firebase from 'firebase';
 import Header from './Header.vue';
-import { User } from '../interfaces/index';
+import { UserInfo } from '@/interfaces/index';
 import Avatar from '@/components/Avatar.vue';
 
 export default Vue.extend({
@@ -66,7 +66,7 @@ export default Vue.extend({
 		computedContainerCols() {
 			return this.$vuetify.breakpoint.mobile ? 12 : 8;
 		},
-		user(): User {
+		user(): UserInfo {
 			return this.$store.getters.getUser;
 		}
 	},
@@ -79,7 +79,7 @@ export default Vue.extend({
 			});
 
 			firebase.auth().signOut();
-			this.$router.push('/signin');
+			this.$router.replace('/signin');
 		}
 	},
 	components: { Header, Avatar }

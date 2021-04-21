@@ -1,11 +1,11 @@
 import { RootState } from './state';
-import { setAxiosToken } from '../plugins/axios';
+import { setAxiosToken } from '@/plugins/axios';
 import {
-	User,
+	UserInfo,
 	EmotionResponse,
 	AnswerResponse,
 	AnswerInfo
-} from '../interfaces/index';
+} from '@/interfaces/index';
 
 export enum MutationTypes {
 	SET_TOKEN = 'SET_TOKEN',
@@ -26,7 +26,7 @@ export const mutations = {
 		state.token = token;
 		setAxiosToken(token);
 	},
-	[MutationTypes.SET_USER](state: RootState, user: User) {
+	[MutationTypes.SET_USER](state: RootState, user: UserInfo) {
 		state.user = user;
 	},
 	[MutationTypes.SET_ANSWER](state: RootState, answer: AnswerResponse) {
@@ -73,7 +73,7 @@ export const mutations = {
 	[MutationTypes.SET_LOADING](state: RootState, isLoading: boolean) {
 		state.isLoading = isLoading;
 	},
-	[MutationTypes.SET_REPLY_ID](state: RootState, replyId: number) {
+	[MutationTypes.SET_REPLY_ID](state: RootState, replyId: number | null) {
 		state.replyId = replyId;
 	}
 };

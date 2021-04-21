@@ -9,14 +9,14 @@ export interface AnswerInfo {
 	like: LikeResponse;
 	like_count: number;
 	updated_at: string;
-	user: User;
+	user: UserInfo;
 	user_id: number;
-	comment?: CommentInfo;
+	comment?: CommentResponse;
 }
 
 export type AnswerResponse = AnswerInfo[];
 
-export interface User {
+export interface UserInfo {
 	id: number;
 	display_name: string;
 	email: string;
@@ -31,7 +31,7 @@ export interface LikeInfo {
 	created_at?: string;
 	id: number;
 	user_id: number;
-	user?: User;
+	user?: UserInfo;
 }
 
 export type LikeResponse = LikeInfo[];
@@ -56,7 +56,7 @@ interface CommentInfo {
 	created_at: string;
 	id: number;
 	updated_at: string;
-	user: User;
+	user: UserInfo;
 	user_id: number;
 }
 

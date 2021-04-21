@@ -1,6 +1,6 @@
-import { AxiosPromise } from 'axios';
-import instance from '../utils/instance';
-import { AnswerResponse } from '../interfaces/index';
+import { AxiosPromise, AxiosResponse } from 'axios';
+import instance from '@/utils/instance';
+import { AnswerInfo, EmotionInfo } from '@/interfaces/index';
 
 const api = {
 	answer: '/answer',
@@ -12,7 +12,7 @@ const api = {
 function fetchAnswerItems(
 	page: number,
 	limit: number
-): AxiosPromise<AnswerResponse[]> {
+): AxiosPromise<AxiosResponse<AnswerInfo>> {
 	const url = `${api.answer}?page=${page}&limit=${limit}`;
 	return instance.get(url);
 }
@@ -29,7 +29,7 @@ function deleteLike(id: number): AxiosPromise {
 	return instance.delete(url, { data });
 }
 
-function fetchEmotion(): AxiosPromise {
+function fetchEmotion(): Promise<AxiosResponse<EmotionInfo>> {
 	const url = `${api.emotion}`;
 	return instance.get(url);
 }
@@ -42,7 +42,9 @@ function postAnswer(data: {
 	return instance.post(url, data);
 }
 
-function fetchAnswer(params: { answer_id: number }): AxiosPromise {
+function fetchAnswer(params: {
+	answer_id: number;
+}): AxiosPromise<AxiosResponse<AnswerInfo>> {
 	const url = `${api.answer}/${params.answer_id}`;
 	return instance.get(url);
 }
