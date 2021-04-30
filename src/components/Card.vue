@@ -200,7 +200,7 @@
 									</template>
 									<span v-else class="grey--text">{{ reply.created_at }}</span>
 								</div>
-								<div class="text-body-2" v-html="reply.content" />
+								<div class="text-body-2" v-html="nl2br(reply.content)" />
 							</v-alert>
 
 							<v-menu v-if="isMyContent(reply.user_id)" bottom left>
@@ -236,6 +236,7 @@ import { remove } from 'lodash-es';
 import Vue, { PropType } from 'vue';
 import Avatar from './Avatar.vue';
 import { displayedAt } from '@/utils/displayedAt';
+import { nl2br } from '@/utils/nl2br';
 
 export default Vue.extend({
 	props: {
@@ -283,6 +284,7 @@ export default Vue.extend({
 	},
 	methods: {
 		displayedAt,
+		nl2br,
 		goDetail(id: number) {
 			console.log(id);
 		},
@@ -316,7 +318,10 @@ export default Vue.extend({
 		},
 		async postLike(id: number) {
 			try {
-				const { data, status } = await this.$store
+				const {
+					data: { like_id },
+					status
+				} = await this.$store
 					.dispatch(ActionTypes.POST_LIKE, id)
 					.then(response => {
 						return response;
@@ -324,7 +329,7 @@ export default Vue.extend({
 
 				if (status === 200) {
 					this.item.like.push({
-						id: data.like_id,
+						id: like_id,
 						user_id: this.user.id
 					});
 					this.item.like_count += 1;
