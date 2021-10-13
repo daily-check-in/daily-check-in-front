@@ -1,6 +1,6 @@
 <template>
 	<v-app id="inspire">
-		<Header v-if="isShowHeader" />
+		<HeaderLayout v-if="isShowHeader" />
 
 		<v-main class="grey lighten-3">
 			<v-container>
@@ -9,7 +9,7 @@
 						<v-sheet rounded="lg">
 							<v-list color="transparent">
 								<v-list-item>
-									<Avatar
+									<BaseAvatar
 										:photo-url="user.photoURL"
 										:display-name="user.display_name"
 										class="mr-2"
@@ -49,9 +49,9 @@
 <script lang="ts">
 import Vue from 'vue';
 import firebase from 'firebase';
-import Header from './Header.vue';
+import HeaderLayout from './HeaderLayout.vue';
 import { UserInfo } from '@/interfaces/index';
-import Avatar from '@/components/Avatar.vue';
+import BaseAvatar from '@/components/BaseAvatar.vue';
 
 export default Vue.extend({
 	name: 'DefaultLayout',
@@ -82,7 +82,7 @@ export default Vue.extend({
 			this.$router.replace('/signin');
 		}
 	},
-	components: { Header, Avatar }
+	components: { HeaderLayout, BaseAvatar }
 });
 </script>
 

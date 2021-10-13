@@ -14,7 +14,7 @@
 				</v-card>
 			</v-hover>
 
-			<Card
+			<BaseCard
 				v-for="(item, index) in answerItems"
 				:key="`card-${index}`"
 				:item="item"
@@ -35,13 +35,13 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Card from '@/components/Card.vue';
+import BaseCard from '@/components/BaseCard.vue';
 import { ActionTypes } from '@/store/actions';
 import { MutationTypes } from '@/store/mutations';
 import { AnswerResponse, UserInfo } from '@/interfaces';
 
 export default Vue.extend({
-	name: 'Home',
+	name: 'IndexView',
 	data() {
 		return {
 			infiniteId: +new Date(),
@@ -315,6 +315,6 @@ export default Vue.extend({
 			}
 		}
 	},
-	components: { Card }
+	components: { BaseCard }
 });
 </script>

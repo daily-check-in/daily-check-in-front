@@ -14,6 +14,7 @@ import '@/assets/styles/quill.init.scss';
 import { quillEditor } from 'vue-quill-editor';
 
 export default Vue.extend({
+	name: 'BaseEditor',
 	props: {
 		content: {
 			type: String,

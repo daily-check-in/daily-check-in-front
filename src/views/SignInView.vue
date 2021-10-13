@@ -27,7 +27,7 @@ import Vue from 'vue';
 import firebase from 'firebase';
 
 export default Vue.extend({
-	name: 'SignIn',
+	name: 'SignInView',
 	mounted() {
 		this.$gtm.trackEvent({
 			event: 'viewLogin',
