@@ -12,11 +12,12 @@ export default [
 	},
 	{
 		path: '/',
-		name: 'Home',
+		name: 'Index',
 		meta: {
 			layout: 'DefaultLayout'
 		},
-		component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
+		component: () =>
+			import(/* webpackChunkName: "index" */ '@/views/IndexView.vue'),
 		beforeEnter: authGuard()
 	},
 	{
@@ -26,7 +27,7 @@ export default [
 			layout: 'ErrorLayout'
 		},
 		component: () =>
-			import(/* webpackChunkName: "signIn" */ '@/views/SignIn.vue')
+			import(/* webpackChunkName: "signIn" */ '@/views/SignInView.vue')
 	},
 	{
 		path: '/write/:id?',
@@ -36,7 +37,7 @@ export default [
 			detail: true
 		},
 		component: () =>
-			import(/* webpackChunkName: "write" */ '@/views/Write.vue'),
+			import(/* webpackChunkName: "write" */ '@/views/WriteView.vue'),
 		beforeEnter: authGuard()
 	}
 ];
