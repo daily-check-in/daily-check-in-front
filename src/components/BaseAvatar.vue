@@ -4,7 +4,7 @@
 			<img src="@/assets/images/icon/crown.gif" class="dc-king-crown" alt />
 		</template>
 		<v-list-item-avatar color="white" class="ma-0">
-			<v-img alt :src="photoUrl" />
+			<v-img alt :src="photoUrl" referrerpolicy="no-referer" />
 		</v-list-item-avatar>
 	</div>
 </template>
