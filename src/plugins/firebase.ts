@@ -1,5 +1,6 @@
 import * as firebase from 'firebase/app';
 import 'firebase/analytics';
+import 'firebase/messaging';
 import 'firebase/auth';
 
 const firebaseConfig = {
@@ -14,5 +15,16 @@ const firebaseConfig = {
 };
 
 firebase.default.initializeApp(firebaseConfig);
+const messaging = firebase.default.messaging();
+
+Notification.requestPermission().then(function(permission) {
+	if (permission === 'granted') {
+		console.log('Notification permission granted.');
+	} else {
+		console.log('Unable to get permission to notify.');
+	}
+});
+
+messaging.getToken().then(token => console.log(token));
 
 export default firebase;
