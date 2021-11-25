@@ -8,6 +8,7 @@ import VueAnalytics from 'vue-analytics';
 import VueGtm from 'vue-gtm';
 import './plugins';
 import { fetchUserInfo } from './api/auth';
+import './registerServiceWorker';
 Vue.config.productionTip = false;
 
 Vue.use(VueAnalytics, {
