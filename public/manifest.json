@@ -53,5 +53,6 @@
   "theme_color": "black",
   "display": "standalone",
   "orientation": "portrait",
-  "gcm_sender_id": "380407889965"
+  "gcm_sender_id": "380407889965",
+  "purpose": "any maskable"
 }
