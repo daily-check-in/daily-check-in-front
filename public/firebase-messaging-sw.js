@@ -3,29 +3,51 @@ importScripts(
 	'https://www.gstatic.com/firebasejs/8.2.10/firebase-messaging.js'
 );
 
-const config = {
-	apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
-	authDomain: process.env.VUE_APP_AUTH_DOMAIN,
-	databaseURL: process.env.VUE_APP_DATABASE_URL,
-	projectId: process.env.VUE_APP_PROJECT_ID,
-	storageBucket: process.env.VUE_APP_STORAGE_BUCKET,
-	messagingSenderId: process.env.VUE_APP_MESSAGING_SENDER_ID,
-	appId: process.env.VUE_APP_APP_ID,
-	measurementId: process.env.VUE_APP_MEASUREMENT_ID
+// Set Firebase configuration, once available
+self.addEventListener('fetch', () => {
+	const urlParams = new URLSearchParams(location.search);
+	self.firebaseConfig = Object.fromEntries(urlParams);
+});
+
+// "Default" Firebase configuration (prevents errors)
+const defaultConfig = {
+	apiKey: true,
+	projectId: true,
+	messagingSenderId: true,
+	appId: true
 };
 
-firebase.initializeApp(config);
-const messaging = firebase.messaging();
+// Initialize Firebase app
+firebase.initializeApp(self.firebaseConfig || defaultConfig);
 
-// 백그라운드 상태에서 받은 알림 처리
-messaging.setBackgroundMessageHandler(payload => {
-	console.log('Message received. ', payload);
-	// Customize notification here
-	const title = 'Background Message Title';
+// const messaging = firebase.messaging();
+// background message handle
+// messaging.setBackgroundMessageHandler(payload => {
+// 	console.log('Message received. ', payload);
+// 	// Customize notification here
+// 	const title = 'Background Message Title';
+// 	const options = {
+// 		body: payload.data.message,
+// 		icon: '/firebase-logo.png'
+// 	};
+//
+// 	return self.registration.showNotification(title, options);
+// });
+
+self.addEventListener('push', function(event) {
+	const data = event.data.json();
+	console.log(data);
+	const notification = data.notification;
+	const title = notification.title;
 	const options = {
-		body: payload.data.message,
-		icon: '/firebase-logo.png'
+		body: notification.body,
+		icon: notification.icon
 	};
+	self.registration.showNotification(title, options);
+});
 
-	return self.registration.showNotification(title, options);
+self.addEventListener('notificationclick', function(event) {
+	const url = '/';
+	event.notification.close();
+	event.waitUntil(clients.openWindow(url));
 });
