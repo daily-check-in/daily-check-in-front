@@ -20,20 +20,6 @@ const defaultConfig = {
 // Initialize Firebase app
 firebase.initializeApp(self.firebaseConfig || defaultConfig);
 
-// const messaging = firebase.messaging();
-// background message handle
-// messaging.setBackgroundMessageHandler(payload => {
-// 	console.log('Message received. ', payload);
-// 	// Customize notification here
-// 	const title = 'Background Message Title';
-// 	const options = {
-// 		body: payload.data.message,
-// 		icon: '/firebase-logo.png'
-// 	};
-//
-// 	return self.registration.showNotification(title, options);
-// });
-
 self.addEventListener('push', function(event) {
 	const data = event.data.json();
 	console.log(data);
