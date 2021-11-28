@@ -48,7 +48,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import firebase from 'firebase';
+import firebase from 'firebase/compat';
 import HeaderLayout from './HeaderLayout.vue';
 import { UserInfo } from '@/interfaces/index';
 import BaseAvatar from '@/components/BaseAvatar.vue';
