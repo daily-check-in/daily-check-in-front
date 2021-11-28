@@ -1,6 +1,6 @@
-import * as firebase from 'firebase/app';
+import * as firebase from 'firebase/compat/app';
 import 'firebase/analytics';
-import 'firebase/messaging';
+import { getMessaging, getToken } from 'firebase/messaging';
 import 'firebase/auth';
 
 const firebaseConfig = {
@@ -15,16 +15,27 @@ const firebaseConfig = {
 };
 
 firebase.default.initializeApp(firebaseConfig);
-const messaging = firebase.default.messaging();
 
-Notification.requestPermission().then(function(permission) {
-	if (permission === 'granted') {
-		console.log('Notification permission granted.');
-	} else {
-		console.log('Unable to get permission to notify.');
-	}
-});
+// Get registration token. Initially this makes a network call, once retrieved
+// subsequent calls to getToken will return from cache.
+const messaging = getMessaging();
 
-messaging.getToken().then(token => console.log(token));
+getToken(messaging)
+	.then(currentToken => {
+		if (currentToken) {
+			console.log(currentToken);
+			prompt('fcm token', currentToken);
+		} else {
+			// Show permission request UI
+			console.log(
+				'No registration token available. Request permission to generate one.'
+			);
+			// ...
+		}
+	})
+	.catch(err => {
+		console.log('An error occurred while retrieving token. ', err);
+		// ...
+	});
 
 export default firebase;
