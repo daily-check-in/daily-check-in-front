@@ -5,7 +5,7 @@
 				<div class="d-flex flex-column pa-4">
 					<img src="@/assets/images/404.svg" alt class="mb-10" />
 
-					<v-btn to="/" outlined color="success">메인으로 돌아가기</v-btn>
+					<v-btn to="/" outlined color="primary">메인으로 돌아가기</v-btn>
 				</div>
 			</v-col>
 		</v-row>

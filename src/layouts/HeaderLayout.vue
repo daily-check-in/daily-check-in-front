@@ -14,7 +14,7 @@ export default Vue.extend({
 	name: 'HeaderLayout',
 	computed: {
 		appBarColor() {
-			return this.$vuetify.breakpoint.mobile ? 'success' : 'white';
+			return this.$vuetify.breakpoint.mobile ? 'primary' : 'white';
 		}
 	},
 	components: { DesktopHeader, MobileHeader }

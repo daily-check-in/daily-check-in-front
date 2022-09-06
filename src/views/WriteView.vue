@@ -8,7 +8,7 @@
 				<v-chip-group
 					v-model="emotionItem"
 					column
-					active-class="success success--text font-weight-bold"
+					active-class="primary primary--text font-weight-bold"
 					class="px-2"
 				>
 					<v-chip v-for="item in orderByRandomEmotion" :key="item.id" outlined>
@@ -24,7 +24,7 @@
 
 			<v-btn
 				v-show="!$vuetify.breakpoint.mobile"
-				color="success"
+				color="primary"
 				:disabled="isValid"
 				class="float-right"
 				@click="handleSubmit()"

@@ -11,7 +11,7 @@
 				</div>
 				<v-btn
 					x-large
-					color="success"
+					color="primary"
 					class="mt-4 float-right font-weight-bold"
 					@click="signInWithGoogle"
 				>

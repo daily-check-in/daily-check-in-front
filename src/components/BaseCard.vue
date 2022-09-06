@@ -149,7 +149,7 @@
 				auto-grow
 				dense
 				hide-details
-				color="success"
+				color="primary"
 				class="v-card__text mr-2"
 				rows="1"
 				row-height="12"
@@ -157,7 +157,7 @@
 			</v-textarea>
 			<v-btn
 				icon
-				color="success"
+				color="primary"
 				:disabled="sync_reply === ''"
 				@click="handleReplySubmit()"
 			>
