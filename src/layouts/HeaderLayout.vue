@@ -11,10 +11,10 @@ import MobileHeader from '@/components/Header/MobileHeader.vue';
 import Vue from 'vue';
 
 export default Vue.extend({
-	name: 'Header',
+	name: 'HeaderLayout',
 	computed: {
 		appBarColor() {
-			return this.$vuetify.breakpoint.mobile ? 'success' : 'white';
+			return this.$vuetify.breakpoint.mobile ? 'primary' : 'white';
 		}
 	},
 	components: { DesktopHeader, MobileHeader }

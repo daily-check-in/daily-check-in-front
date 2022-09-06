@@ -3,11 +3,12 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import vuetify from './plugins/vuetify';
-import firebase from './plugins/firebase';
+import firebase from 'firebase/compat';
 import VueAnalytics from 'vue-analytics';
 import VueGtm from 'vue-gtm';
 import './plugins';
 import { fetchUserInfo } from './api/auth';
+import './registerServiceWorker';
 Vue.config.productionTip = false;
 
 Vue.use(VueAnalytics, {
@@ -23,7 +24,7 @@ Vue.use(VueGtm, {
 	vueRouter: router
 });
 
-firebase.default.auth().onAuthStateChanged(async user => {
+firebase.auth().onAuthStateChanged(async user => {
 	if (user) {
 		await user.getIdToken().then((token: string) => {
 			store.commit('SET_TOKEN', token);

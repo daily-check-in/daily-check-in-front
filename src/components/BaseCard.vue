@@ -2,7 +2,7 @@
 	<v-card class="pt-3">
 		<v-list-item class="grow">
 			<v-list-item class="mb-2 px-0">
-				<Avatar
+				<BaseAvatar
 					:photo-url="item.user.photoURL"
 					:display-name="item.user.display_name"
 					class="mr-2"
@@ -149,7 +149,7 @@
 				auto-grow
 				dense
 				hide-details
-				color="success"
+				color="primary"
 				class="v-card__text mr-2"
 				rows="1"
 				row-height="12"
@@ -157,7 +157,7 @@
 			</v-textarea>
 			<v-btn
 				icon
-				color="success"
+				color="primary"
 				:disabled="sync_reply === ''"
 				@click="handleReplySubmit()"
 			>
@@ -170,7 +170,7 @@
 			<v-list class="py-0">
 				<template v-for="(reply, index) in item.comment">
 					<v-list-item :key="`reply-${index}`" class="px-0">
-						<Avatar
+						<BaseAvatar
 							:photo-url="reply.user.photoURL"
 							:display-name="reply.user.display_name"
 							class="mr-2 align-self-start mt-2"
@@ -234,11 +234,12 @@ import { AnswerInfo, LikeInfo, UserInfo } from '@/interfaces';
 import { ActionTypes } from '@/store/actions';
 import { remove } from 'lodash-es';
 import Vue, { PropType } from 'vue';
-import Avatar from './Avatar.vue';
+import BaseAvatar from './BaseAvatar.vue';
 import { displayedAt } from '@/utils/displayedAt';
 import { nl2br } from '@/utils/nl2br';
 
 export default Vue.extend({
+	name: 'BaseCard',
 	props: {
 		item: {
 			type: Object as PropType<AnswerInfo>
@@ -424,7 +425,7 @@ export default Vue.extend({
 		}
 	},
 	components: {
-		Avatar
+		BaseAvatar
 	}
 });
 </script>

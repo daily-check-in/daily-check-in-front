@@ -8,7 +8,7 @@
 				<v-chip-group
 					v-model="emotionItem"
 					column
-					active-class="success success--text font-weight-bold"
+					active-class="primary primary--text font-weight-bold"
 					class="px-2"
 				>
 					<v-chip v-for="item in orderByRandomEmotion" :key="item.id" outlined>
@@ -19,12 +19,12 @@
 			</v-card>
 
 			<v-card min-height="50vh" class="my-4">
-				<Editor :content.sync="content" :placeholder="placeholder" />
+				<BaseEditor :content.sync="content" :placeholder="placeholder" />
 			</v-card>
 
 			<v-btn
 				v-show="!$vuetify.breakpoint.mobile"
-				color="success"
+				color="primary"
 				:disabled="isValid"
 				class="float-right"
 				@click="handleSubmit()"
@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import Editor from '@/components/Editor.vue';
+import BaseEditor from '@/components/BaseEditor.vue';
 import { ActionTypes } from '@/store/actions';
 import { MutationTypes } from '@/store/mutations';
 import eventBus from '@/utils/bus';
@@ -48,7 +48,7 @@ import { VueConstructor } from 'vue';
 export default (Vue as VueConstructor<
 	Vue & InstanceType<typeof writeMixin>
 >).extend({
-	name: 'Write',
+	name: 'WriteView',
 	mixins: [writeMixin],
 	data() {
 		return {
@@ -186,7 +186,7 @@ export default (Vue as VueConstructor<
 			}
 		}
 	},
-	components: { Editor }
+	components: { BaseEditor }
 });
 </script>
 

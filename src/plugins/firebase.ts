@@ -1,5 +1,6 @@
-import * as firebase from 'firebase/app';
+import * as firebase from 'firebase/compat/app';
 import 'firebase/analytics';
+import { getMessaging, getToken } from 'firebase/messaging';
 import 'firebase/auth';
 
 const firebaseConfig = {
@@ -14,5 +15,27 @@ const firebaseConfig = {
 };
 
 firebase.default.initializeApp(firebaseConfig);
+
+// Get registration token. Initially this makes a network call, once retrieved
+// subsequent calls to getToken will return from cache.
+const messaging = getMessaging();
+
+getToken(messaging)
+	.then(currentToken => {
+		if (currentToken) {
+			// console.log(currentToken);
+			// prompt('fcm token', currentToken);
+		} else {
+			// Show permission request UI
+			console.log(
+				'No registration token available. Request permission to generate one.'
+			);
+			// ...
+		}
+	})
+	.catch(err => {
+		console.log('An error occurred while retrieving token. ', err);
+		// ...
+	});
 
 export default firebase;

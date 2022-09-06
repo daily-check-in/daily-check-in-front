@@ -11,7 +11,7 @@
 				</div>
 				<v-btn
 					x-large
-					color="success"
+					color="primary"
 					class="mt-4 float-right font-weight-bold"
 					@click="signInWithGoogle"
 				>
@@ -24,10 +24,10 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import firebase from 'firebase';
+import firebase from 'firebase/compat';
 
 export default Vue.extend({
-	name: 'SignIn',
+	name: 'SignInView',
 	mounted() {
 		this.$gtm.trackEvent({
 			event: 'viewLogin',

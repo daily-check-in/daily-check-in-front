@@ -8,6 +8,7 @@
 import Vue from 'vue';
 
 export default Vue.extend({
+	name: 'LoadingOverlay',
 	computed: {
 		isLoading() {
 			return this.$store.state.isLoading;
