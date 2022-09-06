@@ -52,6 +52,7 @@ import firebase from 'firebase/compat';
 import HeaderLayout from './HeaderLayout.vue';
 import { UserInfo } from '@/interfaces/index';
 import BaseAvatar from '@/components/BaseAvatar.vue';
+import FlareLane from '@flarelane/flarelane-web-sdk';
 
 export default Vue.extend({
 	name: 'DefaultLayout',
@@ -78,6 +79,7 @@ export default Vue.extend({
 				user_email: this.user.email
 			});
 
+			FlareLane.setUserId(null);
 			firebase.auth().signOut();
 			this.$router.replace('/signin');
 		}
