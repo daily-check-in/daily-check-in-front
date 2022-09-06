@@ -23,8 +23,8 @@ const messaging = getMessaging();
 getToken(messaging)
 	.then(currentToken => {
 		if (currentToken) {
-			console.log(currentToken);
-			prompt('fcm token', currentToken);
+			// console.log(currentToken);
+			// prompt('fcm token', currentToken);
 		} else {
 			// Show permission request UI
 			console.log(
