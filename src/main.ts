@@ -9,6 +9,7 @@ import VueGtm from 'vue-gtm';
 import './plugins';
 import { fetchUserInfo } from './api/auth';
 import './registerServiceWorker';
+import FlareLane from '@flarelane/flarelane-web-sdk';
 Vue.config.productionTip = false;
 
 Vue.use(VueAnalytics, {
@@ -37,6 +38,7 @@ firebase.auth().onAuthStateChanged(async user => {
 			return response;
 		});
 		store.commit('SET_USER', data);
+		await FlareLane.setUserId(data.email);
 
 		const isSignIn = location.pathname.indexOf('signin') > -1;
 		if (isSignIn) {
